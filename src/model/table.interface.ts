@@ -7,7 +7,6 @@ export interface ITable {
     pots: IPot[];
     board: IBoard;
     currentActingPlayer: number;
-    minimumCallToStayIn: number;
     dealingPlayer: number;
     blindAmount: number;
 }

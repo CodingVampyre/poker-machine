@@ -1,5 +1,5 @@
-import { CardColor, CardValue } from "../../model/card.interface";
-import { ITable } from "../../model/table.interface";
+import { CardColor, CardValue } from "../../../model/card.interface";
+import { ITable } from "../../../model/table.interface";
 
 const tableInitialized: ITable = {
     players: [
@@ -60,7 +60,6 @@ const tableInitialized: ITable = {
         },
     },
     currentActingPlayer: 0,
-    minimumCallToStayIn: 100,
     dealingPlayer: 1,
     blindAmount: 100,
 }
