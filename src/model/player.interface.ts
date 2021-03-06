@@ -1,6 +1,7 @@
-import { ICard } from "./card.interface";
+import { Card } from "./card.interface";
 
 export interface IPlayer {
+    name: string;
     bankroll: number;
-    hand: ICard[];
+    hand: Card[];
 }

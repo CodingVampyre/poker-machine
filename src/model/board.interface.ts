@@ -1,7 +1,16 @@
-import { ICard } from "./card.interface";
+import { Card } from "./card.interface";
 
 export interface IBoard {
-    flop: ICard[];
-    turn: ICard;
-    river: ICard;
+    flop: {
+        cards:Card[];
+        revealed: boolean;
+    };
+    turn: {
+        card: Card;
+        revealed: boolean;
+    };
+    river: {
+        card: Card;
+        revealed: boolean;
+    };
 }
