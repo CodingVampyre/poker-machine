@@ -6,6 +6,7 @@ const tableInitialized: ITable = {
         {
             name: 'Jonny',
             bankroll: 2000,
+            tokensOnTable: 0,
             hand: [
                 [CardColor.DIAMONDS, CardValue.ACE],
                 [CardColor.HEARTS, CardValue.KING],
@@ -14,6 +15,7 @@ const tableInitialized: ITable = {
         {
             name: 'Kevin',
             bankroll: 2200,
+            tokensOnTable: 0,
             hand: [
                 [CardColor.DIAMONDS, CardValue.TWO],
                 [CardColor.DIAMONDS, CardValue.SEVEN],
@@ -22,6 +24,7 @@ const tableInitialized: ITable = {
         {
             name: 'James',
             bankroll: 1200,
+            tokensOnTable: 0,
             hand: [
                 [CardColor.SPADES, CardValue.QUEEN],
                 [CardColor.HEARTS, CardValue.ACE],
@@ -30,6 +33,7 @@ const tableInitialized: ITable = {
         {
             name: 'Jill',
             bankroll: 8400,
+            tokensOnTable: 0,
             hand: [
                 [CardColor.DIAMONDS, CardValue.FOUR],
                 [CardColor.SPADES, CardValue.SIX],
