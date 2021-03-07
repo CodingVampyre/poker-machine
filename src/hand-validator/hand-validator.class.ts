@@ -150,6 +150,22 @@ export class HandValidator {
         return undefined;
     }
 
+    /**
+     * check if a set of cards contains a straight flush
+     * @param cards 
+     * @returns 
+     */
+    public static hasStraightFlush(cards: Card[]): Card[] | undefined {
+        HandValidator.orderByValue(cards, 'desc');
+        // check for a straight
+        const straight = HandValidator.hasStraight(cards);
+        if (straight === undefined) { return undefined; }
+        // check if a straight is a flush
+        const straightFlush = HandValidator.hasFlush(straight);
+        if (straightFlush === undefined) { return undefined; }
+        return straightFlush;
+    }
+
     // ***********
     // * HELPERS *
     // ***********
