@@ -8,8 +8,8 @@ const tableInitialized: ITable = {
 			bankroll: 2000,
 			tokensOnTable: 0,
 			hand: [
-				[CardColor.DIAMONDS, CardValue.ACE],
-				[CardColor.HEARTS, CardValue.KING],
+				[CardColor.HEARTS, CardValue.JACK],
+				[CardColor.HEARTS, CardValue.TWO],
 			]
 		},
 		{
@@ -17,8 +17,8 @@ const tableInitialized: ITable = {
 			bankroll: 2200,
 			tokensOnTable: 0,
 			hand: [
-				[CardColor.DIAMONDS, CardValue.TWO],
-				[CardColor.DIAMONDS, CardValue.SEVEN],
+				[CardColor.SPADES, CardValue.TEN],
+				[CardColor.CLUBS, CardValue.TEN],
 			]
 		},
 		{
@@ -26,8 +26,8 @@ const tableInitialized: ITable = {
 			bankroll: 1200,
 			tokensOnTable: 0,
 			hand: [
-				[CardColor.SPADES, CardValue.QUEEN],
-				[CardColor.HEARTS, CardValue.ACE],
+				[CardColor.DIAMONDS, CardValue.EIGHT],
+				[CardColor.SPADES, CardValue.JACK],
 			]
 		},
 		{
@@ -35,8 +35,8 @@ const tableInitialized: ITable = {
 			bankroll: 8400,
 			tokensOnTable: 0,
 			hand: [
-				[CardColor.DIAMONDS, CardValue.FOUR],
-				[CardColor.SPADES, CardValue.SIX],
+				[CardColor.SPADES, CardValue.ACE],
+				[CardColor.HEARTS, CardValue.KING],
 			]
 		}
 	],
@@ -44,18 +44,18 @@ const tableInitialized: ITable = {
 	board: {
 		flop: {
 			cards: [
+				[CardColor.DIAMONDS, CardValue.JACK],
+				[CardColor.SPADES, CardValue.SIX],
 				[CardColor.CLUBS, CardValue.SIX],
-				[CardColor.CLUBS, CardValue.SEVEN],
-				[CardColor.SPADES, CardValue.FIVE],
 			],
 			revealed: false,
 		},
 		turn: {
-			card: [CardColor.SPADES, CardValue.NINE],
+			card: [CardColor.DIAMONDS, CardValue.THREE],
 			revealed: false,
 		},
 		river: {
-			card: [CardColor.DIAMONDS, CardValue.EIGHT],
+			card: [CardColor.HEARTS, CardValue.NINE],
 			revealed: false,
 		},
 	},
