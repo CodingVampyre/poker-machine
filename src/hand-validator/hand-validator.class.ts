@@ -130,6 +130,26 @@ export class HandValidator {
         return triplet.concat(pair);
     }
 
+    /**
+     * checks for a quad, four cards of the same color
+     * @param cards 
+     * @returns 
+     */
+    public static hasQuads(cards: Card[]): [Card, Card, Card, Card] | undefined {
+        if (cards.length < 4) { return undefined; }
+        HandValidator.orderByValue(cards, 'desc');
+        for (let i = 0; i <= cards.length - 4; i++) {
+            if(
+                cards[i][1] === cards[i+1][1] &&
+                cards[i][1] === cards[i+2][1] &&
+                cards[i][1] === cards[i+3][1]
+            ) {
+                return [cards[i], cards[i+1], cards[i+2], cards[i+3]]
+            }
+        }
+        return undefined;
+    }
+
     // ***********
     // * HELPERS *
     // ***********
