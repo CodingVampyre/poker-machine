@@ -59,7 +59,7 @@ const tableInitialized: ITable = {
             revealed: false,
         },
     },
-    currentActingPlayer: 0,
-    dealingPlayer: 1,
+    currentActingPlayer: 2,
+    dealingPlayer: 0,
     blindAmount: 100,
 }

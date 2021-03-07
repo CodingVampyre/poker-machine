@@ -5,4 +5,5 @@ export enum Action {
 export interface IPlayerAction {
     player: number;
     action: Action;
+    raiseAmount?: number;
 }
