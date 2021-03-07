@@ -79,6 +79,7 @@ export class HandValidator {
      */
     public static hasStraight(cards: Card[]): Card[] | undefined {
         if (cards.length < 5) { return undefined; }
+        // order descending to find the highest straight
         HandValidator.orderByValue(cards, 'desc');
         // loop in such a way there are always four cards to the left of current card
         for (let i = 0; i < cards.length - 5; i++) {
@@ -91,7 +92,22 @@ export class HandValidator {
         return undefined;
     }
 
+    /**
+     * checks for a flush and returns all card of said flush
+     * @param cards 
+     * @returns 
+     */
     public static hasFlush(cards: Card[]): Card[] | undefined {
+        HandValidator.orderByValue(cards, 'desc');
+        for (const color of [CardColor.CLUBS, CardColor.DIAMONDS, CardColor.HEARTS, CardColor.SPADES]) {
+            const colorCount = HandValidator.countColors(cards, color);
+            if (colorCount >= 5) {
+                // remove all cards that are not of that color
+                const cardsOfThatColor = cards.filter(card => card[0] === color);
+                // return the five highest cards so the highest flush can win
+                return cardsOfThatColor.slice(0, 6);
+            }
+        }
         return undefined;
     }
 
