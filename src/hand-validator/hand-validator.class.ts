@@ -8,7 +8,7 @@ export class HandValidator {
      * @param hand 
      * @returns 
      */
-    public static validateHand(hand: Card[]): IHandValidationResult | undefined {
+    public static validateHand(hand: Card[], board: Card[]): IHandValidationResult | undefined {
         return;
     }
 
@@ -17,21 +17,21 @@ export class HandValidator {
      * @param hand returns the highest card a placer owns
      * @returns 
      */
-    public static calculateHighCard(hand: Card[]): Card {
-        HandValidator.orderByValue(hand);
-        return hand[hand.length - 1];
+    public static calculateHighCard(hand: [Card, Card]): Card {
+        const [cardA, cardB] = hand;
+        return cardA[1] >= cardB[1] ? cardA : cardB;
     }
 
     /**
      * returns a pair, if there is one
      * @param hand 
      */
-    public static hasPair(hand: Card[]): [Card, Card] | undefined {
+    public static hasPair(cards: Card[]): [Card, Card] | undefined {
         // for all cards except for the last once since there is no follow up card
-        HandValidator.orderByValue(hand);
-        for (let i = 0; i < hand.length - 1; i++) {
-            const cardA = hand[i];
-            const cardB = hand[i+1];
+        HandValidator.orderByValue(cards);
+        for (let i = 0; i < cards.length - 1; i++) {
+            const cardA = cards[i];
+            const cardB = cards[i+1];
             if (cardA[1] === cardB[1]) { return [cardA, cardB]; }
         }
     }
@@ -41,8 +41,8 @@ export class HandValidator {
      * @param hand 
      * @returns 
      */
-    public static orderByValue(hand: Card[]) {
-        hand.sort((cardA, cardB) => {
+    public static orderByValue(cards: Card[]) {
+        cards.sort((cardA, cardB) => {
             if (cardA[1] < cardB[1]) { return -1; }
             if (cardA[1] > cardB[1]) { return 1; }
             return 0;
