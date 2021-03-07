@@ -36,6 +36,42 @@ export class HandValidator {
         }
     }
 
+    /**
+     * checks for two pairs
+     * @param cards 
+     * @returns borth pairs as a tuble of two cards
+     */
+    public static hasTwoPairs(cards: Card[]): [[Card, Card], [Card, Card]] | undefined {
+        HandValidator.orderByValue(cards);
+        // check first pair
+        const firstPair = HandValidator.hasPair(cards);
+        if (firstPair === undefined) { return undefined }
+        // remove first pair to check for a second one
+        const remainingCards = HandValidator.removeCardsFromList(cards, firstPair[0], firstPair[1]);
+        // fetch second pair
+        const secondPair = HandValidator.hasPair(remainingCards);
+        // if there is one, there are two, so, two pairs!
+        if (secondPair === undefined) { return undefined; }
+        return [firstPair, secondPair];
+    }
+
+    /**
+     * checks for triplets
+     * @param cards 
+     * @returns a tuble of three cards
+     */
+    public static hasTriplet(cards: Card[]): [Card, Card, Card] | undefined {
+        HandValidator.orderByValue(cards);
+        // check until prelast card
+        for (let i = 0; i < cards.length - 2; i++) {
+            // next and next next card should match with current
+            if (cards[i][1] === cards[i+1][1] && cards[i][1] === cards[i+2][1]) {
+                return [cards[i], cards[i+1], cards[i+2]];
+            }
+        }
+        return undefined;
+    }
+
     // ***********
     // * HELPERS *
     // ***********
