@@ -8,7 +8,7 @@ export enum Hand {
     STRAIGHT, 
     FLUSH, 
     FULL_HOUSE, 
-    VIERLING, 
+    QUAD, 
     STRAIGHT_FLUSH, 
     ROYAL_FLUSH
 }
