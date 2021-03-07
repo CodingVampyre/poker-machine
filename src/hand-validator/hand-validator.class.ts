@@ -166,6 +166,22 @@ export class HandValidator {
         return straightFlush;
     }
 
+    /**
+     * checks a set of cards for a royal flush
+     * Royal flush is a straight flush 
+     * @param cards 
+     * @returns 
+     */
+    public static hasRoyalFlush(cards: Card[]): Card[] | undefined {
+        HandValidator.orderByValue(cards, 'desc');
+        const straightFlush = HandValidator.hasStraightFlush(cards);
+        if (straightFlush === undefined) { return undefined; }
+        if (straightFlush[0][1] === CardValue.ACE) {
+            return straightFlush;
+        }
+        return undefined;
+    }
+
     // ***********
     // * HELPERS *
     // ***********
