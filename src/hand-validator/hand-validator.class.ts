@@ -27,6 +27,7 @@ export class HandValidator {
      * @param hand 
      */
     public static hasPair(cards: Card[]): [Card, Card] | undefined {
+        if (cards.length < 2) { return undefined; }
         // for all cards except for the last once since there is no follow up card
         HandValidator.orderByValue(cards);
         for (let i = 0; i < cards.length - 1; i++) {
@@ -109,6 +110,24 @@ export class HandValidator {
             }
         }
         return undefined;
+    }
+
+    /**
+     * checks if a set of cards is a full house
+     * @param cards 
+     * @returns 
+     */
+    public static hasFullHouse(cards: Card[]): Card[] | undefined {
+        HandValidator.orderByValue(cards, 'desc');
+        // check a triplet
+        const triplet = HandValidator.hasTriplet(cards);
+        if (triplet === undefined) { return undefined }
+        // remove triplet
+        const removedTripletCards = HandValidator.removeCardsFromList(cards, ...triplet);
+        // check remaining for a pair
+        const pair = HandValidator.hasPair(removedTripletCards);
+        if (pair === undefined) { return undefined; }
+        return triplet.concat(pair);
     }
 
     // ***********
