@@ -5,15 +5,16 @@ export class HandValidator {
 
     /**
      * takes a list of cards, usually 7, and validates it
-     * @param hand 
-     * @returns 
+     * @param hand
+     * @param board
+     * @returns
      */
     public static validateHand(hand: [Card, Card], board: Card[]): IHandValidationResult | undefined {
         // select the high card
         const highCard = HandValidator.selectHighCard(hand);
         // check from top to bottom, royal flush first
         const royalFlush = HandValidator.hasRoyalFlush(hand.concat(board));
-        if (royalFlush !== undefined) { return { result: royalFlush; highCard: highCard, hand: Hand.ROYAL_FLUSH } }
+        if (royalFlush !== undefined) { return { result: royalFlush, highCard: highCard, hand: Hand.ROYAL_FLUSH } }
         return;
     }
 
