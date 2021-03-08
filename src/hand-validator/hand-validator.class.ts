@@ -12,9 +12,14 @@ export class HandValidator {
     public static validateHand(hand: [Card, Card], board: Card[]): IHandValidationResult | undefined {
         // select the high card
         const highCard = HandValidator.selectHighCard(hand);
+
         // check from top to bottom, royal flush first
         const royalFlush = HandValidator.hasRoyalFlush(hand.concat(board));
         if (royalFlush !== undefined) { return { result: royalFlush, highCard: highCard, hand: Hand.ROYAL_FLUSH } }
+
+        // check for straight flush
+        const straightFlush = HandValidator.hasStraightFlush(hand.concat(board));
+        if (straightFlush !== undefined) { return { result: straightFlush, highCard: highCard, hand: Hand.STRAIGHT_FLUSH } }
         return;
     }
 
