@@ -167,7 +167,7 @@ describe('straight', () => {
 		expect(result).toBeDefined();
 		expect(result).toStrictEqual([
 			[CardColor.SPADES, CardValue.SIX],
-			[CardColor.DIAMONDS, CardValue.FIVE],
+			[CardColor.SPADES, CardValue.FIVE],
 			[CardColor.CLUBS, CardValue.FOUR],
 			[CardColor.HEARTS, CardValue.THREE],
 			[CardColor.HEARTS, CardValue.TWO],

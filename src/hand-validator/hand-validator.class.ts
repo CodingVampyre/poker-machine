@@ -116,7 +116,7 @@ export class HandValidator {
         const cardsWithoutDuplicates = HandValidator.removeDuplicateValues(cards);
         if (cardsWithoutDuplicates.length < 5) { return undefined; }
         // loop in such a way there are always four cards to the left of current card
-        for (let i = 0; i < cardsWithoutDuplicates.length - 5; i++) {
+        for (let i = 0; i <= cardsWithoutDuplicates.length - 5; i++) {
             // create subset of five cards
             const subset = cardsWithoutDuplicates.slice(i, i + 5);
             // check if that set is a striaght and return if so
