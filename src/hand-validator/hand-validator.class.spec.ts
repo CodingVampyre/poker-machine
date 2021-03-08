@@ -195,4 +195,18 @@ describe('straight', () => {
 		])
 	});
 
+	it('should detect straight (worst case)', () => {
+		const cards: Card[] = [
+			[CardColor.SPADES, CardValue.QUEEN],
+			[CardColor.DIAMONDS, CardValue.TEN],
+			[CardColor.CLUBS, CardValue.NINE],
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.HEARTS, CardValue.SEVEN],
+			[CardColor.SPADES, CardValue.EIGHT],
+			[CardColor.CLUBS, CardValue.THREE],
+		]
+		const result = HandValidator.hasStraight(cards);
+		expect(result).toBeUndefined();
+	});
+
 });
