@@ -129,3 +129,28 @@ describe('detect triplets', () => {
 	});
 
 });
+
+describe('straight', () => {
+
+	it('should detect two pairs (goof case)', () => {
+		const cards: Card[] = [
+			[CardColor.HEARTS, CardValue.SEVEN],
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.CLUBS, CardValue.NINE],
+			[CardColor.DIAMONDS, CardValue.TEN],
+			[CardColor.SPADES, CardValue.JACK],
+			[CardColor.SPADES, CardValue.EIGHT],
+			[CardColor.CLUBS, CardValue.THREE],
+		]
+		const result = HandValidator.hasStraight(cards);
+		expect(result).toBeDefined();
+		expect(result).toStrictEqual([
+			[CardColor.HEARTS, CardValue.SEVEN],
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.CLUBS, CardValue.NINE],
+			[CardColor.DIAMONDS, CardValue.TEN],
+			[CardColor.SPADES, CardValue.JACK],
+		])
+	});
+
+});
