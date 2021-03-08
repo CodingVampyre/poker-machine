@@ -1,5 +1,5 @@
-import {Card, CardColor, CardValue} from "../model/card.interface";
-import {Hand, IHandValidationResult} from "./hand-validation-result.interface";
+import { Card, CardColor, CardValue } from "../model/card.interface";
+import { Hand, IHandValidationResult } from "./hand-validation-result.interface";
 
 export class HandValidator {
 
@@ -111,13 +111,14 @@ export class HandValidator {
      * @returns 
      */
     public static hasStraight(cards: Card[]): Card[] | undefined {
-        if (cards.length < 5) { return undefined; }
         // order descending to find the highest straight
         HandValidator.orderByValue(cards, 'desc');
+        const cardsWithoutDuplicates = HandValidator.removeDuplicateValues(cards);
+        if (cardsWithoutDuplicates.length < 5) { return undefined; }
         // loop in such a way there are always four cards to the left of current card
-        for (let i = 0; i < cards.length - 5; i++) {
+        for (let i = 0; i < cardsWithoutDuplicates.length - 5; i++) {
             // create subset of five cards
-            const subset = cards.slice(i, i + 5);
+            const subset = cardsWithoutDuplicates.slice(i, i + 5);
             // check if that set is a striaght and return if so
             const isStraight = HandValidator.isStraight(subset);
             if (isStraight) { return subset; }
@@ -171,12 +172,12 @@ export class HandValidator {
         if (cards.length < 4) { return undefined; }
         HandValidator.orderByValue(cards, 'desc');
         for (let i = 0; i <= cards.length - 4; i++) {
-            if(
-                cards[i][1] === cards[i+1][1] &&
-                cards[i][1] === cards[i+2][1] &&
-                cards[i][1] === cards[i+3][1]
+            if (
+                cards[i][1] === cards[i + 1][1] &&
+                cards[i][1] === cards[i + 2][1] &&
+                cards[i][1] === cards[i + 3][1]
             ) {
-                return [cards[i], cards[i+1], cards[i+2], cards[i+3]]
+                return [cards[i], cards[i + 1], cards[i + 2], cards[i + 3]]
             }
         }
         return undefined;
@@ -294,6 +295,19 @@ export class HandValidator {
      */
     private static selectHighCard(hand: [Card, Card]): Card {
         return hand[0][1] >= hand[1][1] ? hand[0] : hand[1];
+    }
+
+    /**
+     * 
+     * @param cards 
+     * @returns 
+     */
+    private static removeDuplicateValues(cards: Card[]): Card[] {
+        return cards.filter(
+            (card, index, array) => 
+            index === 0 ||
+            card[1] !== array[index - 1][1]
+        );
     }
 
 }

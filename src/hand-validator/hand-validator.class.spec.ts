@@ -132,7 +132,7 @@ describe('detect triplets', () => {
 
 describe('straight', () => {
 
-	it('should detect two pairs (goof case)', () => {
+	it('should detect straight (good case)', () => {
 		const cards: Card[] = [
 			[CardColor.HEARTS, CardValue.SEVEN],
 			[CardColor.HEARTS, CardValue.EIGHT],
@@ -145,11 +145,32 @@ describe('straight', () => {
 		const result = HandValidator.hasStraight(cards);
 		expect(result).toBeDefined();
 		expect(result).toStrictEqual([
-			[CardColor.HEARTS, CardValue.SEVEN],
-			[CardColor.HEARTS, CardValue.EIGHT],
-			[CardColor.CLUBS, CardValue.NINE],
-			[CardColor.DIAMONDS, CardValue.TEN],
 			[CardColor.SPADES, CardValue.JACK],
+			[CardColor.DIAMONDS, CardValue.TEN],
+			[CardColor.CLUBS, CardValue.NINE],
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.HEARTS, CardValue.SEVEN],
+		])
+	});
+
+	it('should detect straight (mid case)', () => {
+		const cards: Card[] = [
+			[CardColor.SPADES, CardValue.SIX],
+			[CardColor.CLUBS, CardValue.FOUR],
+			[CardColor.HEARTS, CardValue.TWO],
+			[CardColor.SPADES, CardValue.FIVE],
+			[CardColor.HEARTS, CardValue.THREE],
+			[CardColor.CLUBS, CardValue.THREE],
+			[CardColor.DIAMONDS, CardValue.FIVE],
+		]
+		const result = HandValidator.hasStraight(cards);
+		expect(result).toBeDefined();
+		expect(result).toStrictEqual([
+			[CardColor.SPADES, CardValue.SIX],
+			[CardColor.DIAMONDS, CardValue.FIVE],
+			[CardColor.CLUBS, CardValue.FOUR],
+			[CardColor.HEARTS, CardValue.THREE],
+			[CardColor.HEARTS, CardValue.TWO],
 		])
 	});
 
