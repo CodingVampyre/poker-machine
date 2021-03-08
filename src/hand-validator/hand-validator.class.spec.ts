@@ -171,6 +171,27 @@ describe('straight', () => {
 			[CardColor.CLUBS, CardValue.FOUR],
 			[CardColor.HEARTS, CardValue.THREE],
 			[CardColor.HEARTS, CardValue.TWO],
+		]);
+	});
+
+	it('should detect straight (worst case)', () => {
+		const cards: Card[] = [
+			[CardColor.SPADES, CardValue.JACK],
+			[CardColor.DIAMONDS, CardValue.TEN],
+			[CardColor.CLUBS, CardValue.NINE],
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.HEARTS, CardValue.SEVEN],
+			[CardColor.SPADES, CardValue.EIGHT],
+			[CardColor.CLUBS, CardValue.THREE],
+		]
+		const result = HandValidator.hasStraight(cards);
+		expect(result).toBeDefined();
+		expect(result).toStrictEqual([
+			[CardColor.SPADES, CardValue.JACK],
+			[CardColor.DIAMONDS, CardValue.TEN],
+			[CardColor.CLUBS, CardValue.NINE],
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.HEARTS, CardValue.SEVEN],
 		])
 	});
 
