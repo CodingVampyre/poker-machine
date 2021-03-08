@@ -54,3 +54,78 @@ describe('detect pairs', () => {
 	});
 
 });
+
+describe('detect two pairs', () => {
+
+	it('should detect two pairs (bad case)', () => {
+		const cards: Card[] = [
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.HEARTS, CardValue.SEVEN],
+			[CardColor.CLUBS, CardValue.JACK],
+			[CardColor.DIAMONDS, CardValue.TWO],
+			[CardColor.SPADES, CardValue.JACK],
+			[CardColor.SPADES, CardValue.QUEEN],
+			[CardColor.CLUBS, CardValue.EIGHT],
+		]
+		const result = HandValidator.hasTwoPairs(cards);
+		expect(result).toBeDefined();
+		expect(result).toStrictEqual([
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.CLUBS, CardValue.EIGHT],
+			[CardColor.CLUBS, CardValue.JACK],
+			[CardColor.SPADES, CardValue.JACK],
+		])
+	});
+
+	it('should not detect two pairs if there are none', () => {
+		const cards: Card[] = [
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.HEARTS, CardValue.SEVEN],
+			[CardColor.CLUBS, CardValue.JACK],
+			[CardColor.DIAMONDS, CardValue.TWO],
+			[CardColor.SPADES, CardValue.JACK],
+			[CardColor.SPADES, CardValue.QUEEN],
+			[CardColor.CLUBS, CardValue.ACE],
+		]
+		const result = HandValidator.hasTwoPairs(cards);
+		expect(result).toBeUndefined();
+	});
+
+});
+
+describe('detect triplets', () => {
+
+	it('should detect two pairs (bad case)', () => {
+		const cards: Card[] = [
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.HEARTS, CardValue.SEVEN],
+			[CardColor.CLUBS, CardValue.JACK],
+			[CardColor.DIAMONDS, CardValue.TWO],
+			[CardColor.SPADES, CardValue.JACK],
+			[CardColor.SPADES, CardValue.EIGHT],
+			[CardColor.CLUBS, CardValue.EIGHT],
+		]
+		const result = HandValidator.hasTriplet(cards);
+		expect(result).toBeDefined();
+		expect(result).toStrictEqual([
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.SPADES, CardValue.EIGHT],
+			[CardColor.CLUBS, CardValue.EIGHT],
+		])
+	});
+
+	it('should not detect two pairs if there are none', () => {
+		const cards: Card[] = [
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.HEARTS, CardValue.SEVEN],
+			[CardColor.CLUBS, CardValue.JACK],
+			[CardColor.DIAMONDS, CardValue.TWO],
+			[CardColor.SPADES, CardValue.JACK],
+			[CardColor.SPADES, CardValue.QUEEN],
+			[CardColor.CLUBS, CardValue.ACE],
+		]
+		const result = HandValidator.hasTriplet(cards);
+		expect(result).toBeUndefined();
+	});
+
+});
