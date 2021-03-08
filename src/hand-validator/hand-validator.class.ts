@@ -12,15 +12,46 @@ export class HandValidator {
     public static validateHand(hand: [Card, Card], board: Card[]): IHandValidationResult | undefined {
         // select the high card
         const highCard = HandValidator.selectHighCard(hand);
+        const cards = hand.concat(board);
 
         // check from top to bottom, royal flush first
-        const royalFlush = HandValidator.hasRoyalFlush(hand.concat(board));
+        const royalFlush = HandValidator.hasRoyalFlush(cards);
         if (royalFlush !== undefined) { return { result: royalFlush, highCard: highCard, hand: Hand.ROYAL_FLUSH } }
 
         // check for straight flush
-        const straightFlush = HandValidator.hasStraightFlush(hand.concat(board));
+        const straightFlush = HandValidator.hasStraightFlush(cards);
         if (straightFlush !== undefined) { return { result: straightFlush, highCard: highCard, hand: Hand.STRAIGHT_FLUSH } }
-        return;
+
+        // check for quad
+        const quad = HandValidator.hasQuads(cards);
+        if (quad !== undefined) { return { result: quad, highCard: highCard, hand: Hand.QUAD, } }
+
+        // check for full house
+        const fullHouse = HandValidator.hasFullHouse(cards);
+        if (fullHouse !== undefined) { return { result: fullHouse, highCard: highCard, hand: Hand.FULL_HOUSE, } }
+
+        // check for flush
+        const flush = HandValidator.hasFlush(cards);
+        if (flush !== undefined) { return { result: flush, highCard: highCard, hand: Hand.FLUSH, } }
+
+        // check straight
+        const straight = HandValidator.hasStraight(cards);
+        if (straight !== undefined) { return { result: straight, highCard: highCard, hand: Hand.STRAIGHT, } }
+
+        // check three of a kind
+        const triplet = HandValidator.hasTriplet(cards);
+        if (triplet !== undefined) { return { result: triplet, highCard: highCard, hand: Hand.THREE_OF_A_KIND, } }
+
+        // check three of a kind
+        const twoPairs = HandValidator.hasTwoPairs(cards);
+        if (twoPairs !== undefined) { return { result: twoPairs, highCard: highCard, hand: Hand.TWO_PAIRS, } }
+
+        // check one pair
+        const onePair = HandValidator.hasTwoPairs(cards);
+        if (onePair !== undefined) { return { result: onePair, highCard: highCard, hand: Hand.ONE_PAIR, } }
+
+        // return the highest card
+        return { result: [highCard], highCard: highCard, hand: Hand.HIGH_CARD };
     }
 
     /**
@@ -53,7 +84,7 @@ export class HandValidator {
      * @param cards 
      * @returns borth pairs as a tuble of two cards
      */
-    public static hasTwoPairs(cards: Card[]): [[Card, Card], [Card, Card]] | undefined {
+    public static hasTwoPairs(cards: Card[]): Card[] | undefined {
         HandValidator.orderByValue(cards);
         // check first pair
         const firstPair = HandValidator.hasPair(cards);
@@ -64,7 +95,7 @@ export class HandValidator {
         const secondPair = HandValidator.hasPair(remainingCards);
         // if there is one, there are two, so, two pairs!
         if (secondPair === undefined) { return undefined; }
-        return [firstPair, secondPair];
+        return firstPair.concat(secondPair);
     }
 
     /**
