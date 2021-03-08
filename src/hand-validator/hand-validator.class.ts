@@ -55,16 +55,6 @@ export class HandValidator {
     }
 
     /**
-     * 
-     * @param hand returns the highest card a placer owns
-     * @returns 
-     */
-    public static calculateHighCard(hand: [Card, Card]): Card {
-        const [cardA, cardB] = hand;
-        return cardA[1] >= cardB[1] ? cardA : cardB;
-    }
-
-    /**
      * returns a pair, if there is one
      * @param hand 
      */
