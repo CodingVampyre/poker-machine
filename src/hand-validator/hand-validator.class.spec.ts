@@ -144,7 +144,8 @@ describe('straight', () => {
 		]
 		const result = HandValidator.hasStraight(cards);
 		expect(result).toBeDefined();
-		expect(result).toStrictEqual([
+		const firstStraight = result![0];
+		expect(firstStraight).toStrictEqual([
 			[CardColor.SPADES, CardValue.JACK],
 			[CardColor.DIAMONDS, CardValue.TEN],
 			[CardColor.CLUBS, CardValue.NINE],
@@ -165,7 +166,8 @@ describe('straight', () => {
 		]
 		const result = HandValidator.hasStraight(cards);
 		expect(result).toBeDefined();
-		expect(result).toStrictEqual([
+		const firstStraight = result![0];
+		expect(firstStraight).toStrictEqual([
 			[CardColor.SPADES, CardValue.SIX],
 			[CardColor.SPADES, CardValue.FIVE],
 			[CardColor.CLUBS, CardValue.FOUR],
@@ -186,7 +188,8 @@ describe('straight', () => {
 		]
 		const result = HandValidator.hasStraight(cards);
 		expect(result).toBeDefined();
-		expect(result).toStrictEqual([
+		const firstStraight = result![0];
+		expect(firstStraight).toStrictEqual([
 			[CardColor.SPADES, CardValue.JACK],
 			[CardColor.DIAMONDS, CardValue.TEN],
 			[CardColor.CLUBS, CardValue.NINE],

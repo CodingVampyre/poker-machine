@@ -36,7 +36,7 @@ export class HandValidator {
 
         // check straight
         const straight = HandValidator.hasStraight(cards);
-        if (straight !== undefined) { return { result: straight, highCard: highCard, hand: Hand.STRAIGHT, } }
+        if (straight !== undefined) { return { result: straight[0], highCard: highCard, hand: Hand.STRAIGHT, } }
 
         // check three of a kind
         const triplet = HandValidator.hasTriplet(cards);
@@ -110,10 +110,11 @@ export class HandValidator {
      * @param cards 
      * @returns 
      */
-    public static hasStraight(cards: Card[]): Card[] | undefined {
+    public static hasStraight(cards: Card[]): Card[][] | undefined {
         // order descending to find the highest straight
         HandValidator.orderByValue(cards, 'desc');
         const cardsWithoutDuplicates = HandValidator.removeDuplicateValues(cards);
+        const straights = [];
         if (cardsWithoutDuplicates.length < 5) { return undefined; }
         // loop in such a way there are always four cards to the left of current card
         for (let i = 0; i <= cardsWithoutDuplicates.length - 5; i++) {
@@ -121,9 +122,9 @@ export class HandValidator {
             const subset = cardsWithoutDuplicates.slice(i, i + 5);
             // check if that set is a striaght and return if so
             const isStraight = HandValidator.isStraight(subset);
-            if (isStraight) { return subset; }
+            if (isStraight) { straights.push(subset); }
         }
-        return undefined;
+        return straights.length > 0 ? straights : undefined;
     }
 
     /**
@@ -191,12 +192,14 @@ export class HandValidator {
     public static hasStraightFlush(cards: Card[]): Card[] | undefined {
         HandValidator.orderByValue(cards, 'desc');
         // check for a straight
-        const straight = HandValidator.hasStraight(cards);
-        if (straight === undefined) { return undefined; }
+        const straights = HandValidator.hasStraight(cards);
+        if (straights === undefined) { return undefined; }
         // check if a straight is a flush
-        const straightFlush = HandValidator.hasFlush(straight);
-        if (straightFlush === undefined) { return undefined; }
-        return straightFlush;
+        for (const straight of straights) {
+            const straightFlush = HandValidator.hasFlush(straight);
+            if (straightFlush !== undefined) { return straightFlush; }
+        }
+        return undefined;
     }
 
     /**
