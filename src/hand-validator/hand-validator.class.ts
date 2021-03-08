@@ -1,5 +1,5 @@
-import { Card, CardColor, CardValue } from "../model/card.interface";
-import { IHandValidationResult } from "./hand-validation-result.interface";
+import {Card, CardColor, CardValue} from "../model/card.interface";
+import {Hand, IHandValidationResult} from "./hand-validation-result.interface";
 
 export class HandValidator {
 
@@ -8,7 +8,12 @@ export class HandValidator {
      * @param hand 
      * @returns 
      */
-    public static validateHand(hand: Card[], board: Card[]): IHandValidationResult | undefined {
+    public static validateHand(hand: [Card, Card], board: Card[]): IHandValidationResult | undefined {
+        // select the high card
+        const highCard = HandValidator.selectHighCard(hand);
+        // check from top to bottom, royal flush first
+        const royalFlush = HandValidator.hasRoyalFlush(hand.concat(board));
+        if (royalFlush !== undefined) { return { result: royalFlush; highCard: highCard, hand: Hand.ROYAL_FLUSH } }
         return;
     }
 
@@ -253,6 +258,15 @@ export class HandValidator {
             if (card[0] === colorToCount) { count++; }
         }
         return count;
+    }
+
+    /**
+     * returns the high card out of a hand
+     * @param hand
+     * @private
+     */
+    private static selectHighCard(hand: [Card, Card]): Card {
+        return hand[0][1] >= hand[1][1] ? hand[0] : hand[1];
     }
 
 }

@@ -16,4 +16,5 @@ export enum Hand {
 export interface IHandValidationResult {
     hand: Hand;
     highCard: Card;
+    result: Card[];
 }
