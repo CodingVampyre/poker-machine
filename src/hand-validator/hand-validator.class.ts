@@ -224,8 +224,9 @@ export class HandValidator {
 
     /**
      * orders a hand by value and ignores colors
-     * @param hand 
-     * @returns 
+     * @returns
+     * @param cards
+     * @param mode
      */
     public static orderByValue(cards: Card[], mode: 'asc' | 'desc' = 'asc') {
         if (mode === 'asc') {

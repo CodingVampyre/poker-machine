@@ -212,4 +212,40 @@ describe('straight', () => {
 		expect(result).toBeUndefined();
 	});
 
+	it('should detect straight (worst case)', () => {
+		const cards: Card[] = [
+			[CardColor.SPADES, CardValue.TWO],
+			[CardColor.DIAMONDS, CardValue.FOUR],
+			[CardColor.CLUBS, CardValue.THREE],
+			[CardColor.HEARTS, CardValue.FIVE],
+			[CardColor.HEARTS, CardValue.SEVEN],
+			[CardColor.SPADES, CardValue.SIX],
+			[CardColor.CLUBS, CardValue.EIGHT],
+		]
+		const result = HandValidator.hasStraight(cards);
+		expect(result).toBeDefined();
+		const [first, second, third] = result!;
+		expect(first).toStrictEqual([
+			[CardColor.CLUBS, CardValue.EIGHT],
+			[CardColor.HEARTS, CardValue.SEVEN],
+			[CardColor.SPADES, CardValue.SIX],
+			[CardColor.HEARTS, CardValue.FIVE],
+			[CardColor.DIAMONDS, CardValue.FOUR],
+		]);
+		expect(second).toStrictEqual([
+			[CardColor.HEARTS, CardValue.SEVEN],
+			[CardColor.SPADES, CardValue.SIX],
+			[CardColor.HEARTS, CardValue.FIVE],
+			[CardColor.DIAMONDS, CardValue.FOUR],
+			[CardColor.CLUBS, CardValue.THREE],
+		]);
+		expect(third).toStrictEqual([
+			[CardColor.SPADES, CardValue.SIX],
+			[CardColor.HEARTS, CardValue.FIVE],
+			[CardColor.DIAMONDS, CardValue.FOUR],
+			[CardColor.CLUBS, CardValue.THREE],
+			[CardColor.SPADES, CardValue.TWO],
+		]);
+	});
+
 });
