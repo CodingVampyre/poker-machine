@@ -329,4 +329,43 @@ describe('straight', () => {
 
 	});
 
+	describe('full house', () => {
+
+		it ('should detect a full house', () => {
+			const cards: Card[] = [
+				[CardColor.SPADES, CardValue.EIGHT],
+				[CardColor.HEARTS, CardValue.JACK],
+				[CardColor.DIAMONDS, CardValue.EIGHT],
+				[CardColor.DIAMONDS, CardValue.TWO],
+				[CardColor.DIAMONDS, CardValue.JACK],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.CLUBS, CardValue.EIGHT],
+			];
+			const fullHouse = HandValidator.hasFullHouse(cards);
+			expect(fullHouse).toBeDefined();
+			expect(fullHouse).toStrictEqual([
+				[CardColor.SPADES, CardValue.EIGHT],
+				[CardColor.DIAMONDS, CardValue.EIGHT],
+				[CardColor.CLUBS, CardValue.EIGHT],
+				[CardColor.HEARTS, CardValue.JACK],
+				[CardColor.DIAMONDS, CardValue.JACK],
+			]);
+		});
+
+		it ('should not detect a full house (2 pairs)', () => {
+			const cards: Card[] = [
+				[CardColor.HEARTS, CardValue.EIGHT],
+				[CardColor.HEARTS, CardValue.SEVEN],
+				[CardColor.CLUBS, CardValue.JACK],
+				[CardColor.DIAMONDS, CardValue.TWO],
+				[CardColor.SPADES, CardValue.JACK],
+				[CardColor.SPADES, CardValue.EIGHT],
+				[CardColor.CLUBS, CardValue.ACE],
+			];
+			const fullHouse = HandValidator.hasFullHouse(cards);
+			expect(fullHouse).toBeUndefined();
+		});
+
+	});
+
 });
