@@ -368,4 +368,28 @@ describe('straight', () => {
 
 	});
 
+	describe('quads', () => {
+
+		it('should find quads', () => {
+			const cards: Card[] = [
+				[CardColor.HEARTS, CardValue.FOUR],
+				[CardColor.CLUBS, CardValue.FOUR],
+				[CardColor.DIAMONDS, CardValue.ACE],
+				[CardColor.HEARTS, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.FOUR],
+				[CardColor.CLUBS, CardValue.QUEEN],
+				[CardColor.DIAMONDS, CardValue.FOUR],
+			];
+			const quad = HandValidator.hasQuads(cards);
+			expect(quad).toBeDefined();
+			expect(quad).toStrictEqual([
+				[CardColor.HEARTS, CardValue.FOUR],
+				[CardColor.CLUBS, CardValue.FOUR],
+				[CardColor.SPADES, CardValue.FOUR],
+				[CardColor.DIAMONDS, CardValue.FOUR],
+			]);
+		})
+
+	});
+
 });
