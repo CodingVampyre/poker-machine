@@ -120,7 +120,7 @@ export class HandValidator {
         for (let i = 0; i <= cardsWithoutDuplicates.length - 5; i++) {
             // create subset of five cards
             const subset = cardsWithoutDuplicates.slice(i, i + 5);
-            // check if that set is a striaght and return if so
+            // check if that set is a straight and return if so
             const isStraight = HandValidator.isStraight(subset);
             if (isStraight) { straights.push(subset); }
         }
@@ -192,12 +192,12 @@ export class HandValidator {
     public static hasStraightFlush(cards: Card[]): Card[] | undefined {
         HandValidator.orderByValue(cards, 'desc');
         // check for a straight
-        const straights = HandValidator.hasStraight(cards);
-        if (straights === undefined) { return undefined; }
-        // check if a straight is a flush
-        for (const straight of straights) {
-            const straightFlush = HandValidator.hasFlush(straight);
-            if (straightFlush !== undefined) { return straightFlush; }
+        for (const color of [CardColor.DIAMONDS, CardColor.SPADES, CardColor.HEARTS, CardColor.CLUBS]) {
+            const cardsOfColor = HandValidator.retrieveCardsOfColor(cards, color);
+            if (cardsOfColor.length >= 5) {
+                const straight = HandValidator.hasStraight(cardsOfColor);
+                if (straight) { return straight[0]; }
+            }
         }
         return undefined;
     }
@@ -290,6 +290,16 @@ export class HandValidator {
             if (card[0] === colorToCount) { count++; }
         }
         return count;
+    }
+
+    /**
+     *
+     * @param cards
+     * @param colorToRetrieve
+     * @private
+     */
+    private static retrieveCardsOfColor(cards: Card[], colorToRetrieve: CardColor): Card[] {
+        return cards.filter(card => card[0] === colorToRetrieve);
     }
 
     /**

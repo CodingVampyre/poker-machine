@@ -420,8 +420,28 @@ describe('straight', () => {
 			];
 			const result = HandValidator.hasStraightFlush(cards);
 			expect(result).toBeDefined();
-			const firstStraight = result![0];
-			expect(firstStraight).toStrictEqual([
+			expect(result).toStrictEqual([
+				[CardColor.SPADES, CardValue.JACK],
+				[CardColor.SPADES, CardValue.TEN],
+				[CardColor.SPADES, CardValue.NINE],
+				[CardColor.SPADES, CardValue.EIGHT],
+				[CardColor.SPADES, CardValue.SEVEN],
+			]);
+		});
+
+		it('should detect the highest straight flush', () => {
+			const cards: Card[] = [
+				[CardColor.SPADES, CardValue.TEN],
+				[CardColor.SPADES, CardValue.FIVE],
+				[CardColor.SPADES, CardValue.NINE],
+				[CardColor.SPADES, CardValue.JACK],
+				[CardColor.SPADES, CardValue.SEVEN],
+				[CardColor.SPADES, CardValue.EIGHT],
+				[CardColor.SPADES, CardValue.SIX],
+			];
+			const result = HandValidator.hasStraightFlush(cards);
+			expect(result).toBeDefined();
+			expect(result).toStrictEqual([
 				[CardColor.SPADES, CardValue.JACK],
 				[CardColor.SPADES, CardValue.TEN],
 				[CardColor.SPADES, CardValue.NINE],
