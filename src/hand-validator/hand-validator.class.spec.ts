@@ -450,10 +450,66 @@ describe('straight', () => {
 			]);
 		});
 
+		it('should not detect the negative flush', () => {
+			const cards: Card[] = [
+				[CardColor.SPADES, CardValue.TEN],
+				[CardColor.SPADES, CardValue.FIVE],
+				[CardColor.SPADES, CardValue.NINE],
+				[CardColor.SPADES, CardValue.JACK],
+				[CardColor.SPADES, CardValue.SEVEN],
+				[CardColor.HEARTS, CardValue.EIGHT],
+				[CardColor.SPADES, CardValue.SIX],
+			];
+			const result = HandValidator.hasStraightFlush(cards);
+			expect(result).toBeUndefined();
+		});
+
 	});
 
 	describe('royal flush', () => {
 
-	})
+		it('should detect royal flushes', () => {
+			const cards: Card[] = [
+				[CardColor.SPADES, CardValue.ACE],
+				[CardColor.SPADES, CardValue.KING],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.JACK],
+				[CardColor.SPADES, CardValue.TEN],
+				[CardColor.SPADES, CardValue.EIGHT],
+				[CardColor.SPADES, CardValue.SIX],
+			];
+			const result = HandValidator.hasRoyalFlush(cards);
+			expect(result).toBeDefined();
+			expect(result).toStrictEqual([
+				[CardColor.SPADES, CardValue.ACE],
+				[CardColor.SPADES, CardValue.KING],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.JACK],
+				[CardColor.SPADES, CardValue.TEN],
+			]);
+		});
+
+		it('should detect royal flushes', () => {
+			const cards: Card[] = [
+				[CardColor.SPADES, CardValue.EIGHT],
+				[CardColor.SPADES, CardValue.NINE],
+				[CardColor.SPADES, CardValue.TEN],
+				[CardColor.SPADES, CardValue.JACK],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.KING],
+				[CardColor.SPADES, CardValue.ACE],
+			];
+			const result = HandValidator.hasRoyalFlush(cards);
+			expect(result).toBeDefined();
+			expect(result).toStrictEqual([
+				[CardColor.SPADES, CardValue.ACE],
+				[CardColor.SPADES, CardValue.KING],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.JACK],
+				[CardColor.SPADES, CardValue.TEN],
+			]);
+		});
+
+	});
 
 });
