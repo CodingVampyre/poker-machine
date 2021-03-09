@@ -221,7 +221,7 @@ describe('straight', () => {
 			[CardColor.HEARTS, CardValue.SEVEN],
 			[CardColor.SPADES, CardValue.SIX],
 			[CardColor.CLUBS, CardValue.EIGHT],
-		]
+		];
 		const result = HandValidator.hasStraight(cards);
 		expect(result).toBeDefined();
 		const [first, second, third] = result!;
@@ -247,5 +247,72 @@ describe('straight', () => {
 			[CardColor.SPADES, CardValue.TWO],
 		]);
 	});
+
+	describe('check flush', () => {
+
+		it ('should detect a flush (5 cards)', () => {
+			const cards: Card[] = [
+				[CardColor.SPADES, CardValue.TWO],
+				[CardColor.DIAMONDS, CardValue.ACE],
+				[CardColor.SPADES, CardValue.THREE],
+				[CardColor.HEARTS, CardValue.FIVE],
+				[CardColor.SPADES, CardValue.SEVEN],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.EIGHT],
+			];
+			const flush = HandValidator.hasFlush(cards);
+			expect(flush).toBeDefined();
+			expect(flush).toStrictEqual([
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.EIGHT],
+				[CardColor.SPADES, CardValue.SEVEN],
+				[CardColor.SPADES, CardValue.THREE],
+				[CardColor.SPADES, CardValue.TWO],
+			]);
+		});
+
+		it ('should detect a flush (6 cards)', () => {
+			const cards: Card[] = [
+				[CardColor.SPADES, CardValue.TWO],
+				[CardColor.DIAMONDS, CardValue.ACE],
+				[CardColor.SPADES, CardValue.THREE],
+				[CardColor.SPADES, CardValue.ACE],
+				[CardColor.SPADES, CardValue.SEVEN],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.EIGHT],
+			];
+			const flush = HandValidator.hasFlush(cards);
+			expect(flush).toBeDefined();
+			expect(flush).toStrictEqual([
+				[CardColor.SPADES, CardValue.ACE],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.EIGHT],
+				[CardColor.SPADES, CardValue.SEVEN],
+				[CardColor.SPADES, CardValue.THREE],
+			]);
+		});
+
+		it ('should detect a flush (6 cards)', () => {
+			const cards: Card[] = [
+				[CardColor.SPADES, CardValue.TWO],
+				[CardColor.SPADES, CardValue.TEN],
+				[CardColor.SPADES, CardValue.THREE],
+				[CardColor.SPADES, CardValue.ACE],
+				[CardColor.SPADES, CardValue.SEVEN],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.EIGHT],
+			];
+			const flush = HandValidator.hasFlush(cards);
+			expect(flush).toBeDefined();
+			expect(flush).toStrictEqual([
+				[CardColor.SPADES, CardValue.ACE],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.TEN],
+				[CardColor.SPADES, CardValue.EIGHT],
+				[CardColor.SPADES, CardValue.SEVEN],
+			]);
+		});
+
+	})
 
 });

@@ -1,5 +1,5 @@
-import { Card, CardColor, CardValue } from "../model/card.interface";
-import { Hand, IHandValidationResult } from "./hand-validation-result.interface";
+import {Card, CardColor, CardValue} from "../model/card.interface";
+import {Hand, IHandValidationResult} from "./hand-validation-result.interface";
 
 export class HandValidator {
 
@@ -140,7 +140,7 @@ export class HandValidator {
                 // remove all cards that are not of that color
                 const cardsOfThatColor = cards.filter(card => card[0] === color);
                 // return the five highest cards so the highest flush can win
-                return cardsOfThatColor.slice(0, 6);
+                return cardsOfThatColor.slice(0, 5);
             }
         }
         return undefined;
