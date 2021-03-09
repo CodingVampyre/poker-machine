@@ -313,6 +313,20 @@ describe('straight', () => {
 			]);
 		});
 
-	})
+		it ('should not detect a flush (4 cards)', () => {
+			const cards: Card[] = [
+				[CardColor.SPADES, CardValue.TWO],
+				[CardColor.DIAMONDS, CardValue.TEN],
+				[CardColor.SPADES, CardValue.THREE],
+				[CardColor.SPADES, CardValue.ACE],
+				[CardColor.DIAMONDS, CardValue.SEVEN],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.DIAMONDS, CardValue.EIGHT],
+			];
+			const flush = HandValidator.hasFlush(cards);
+			expect(flush).toBeUndefined();
+		});
+
+	});
 
 });
