@@ -135,12 +135,10 @@ export class HandValidator {
     public static hasFlush(cards: Card[]): Card[] | undefined {
         HandValidator.orderByValue(cards, 'desc');
         for (const color of [CardColor.CLUBS, CardColor.DIAMONDS, CardColor.HEARTS, CardColor.SPADES]) {
-            const colorCount = HandValidator.countColors(cards, color);
-            if (colorCount >= 5) {
-                // remove all cards that are not of that color
-                const cardsOfThatColor = cards.filter(card => card[0] === color);
+            const cardsOfColor = HandValidator.retrieveCardsOfColor(cards, color);
+            if (cardsOfColor.length >= 5) {
                 // return the five highest cards so the highest flush can win
-                return cardsOfThatColor.slice(0, 5);
+                return cardsOfColor.slice(0, 5);
             }
         }
         return undefined;
@@ -276,20 +274,6 @@ export class HandValidator {
             else { return false; }
         }
         return true;
-    }
-
-    /**
-     * counts a specific color in a set of cards
-     * @param cards 
-     * @param colorToCount 
-     * @returns 
-     */
-    private static countColors(cards: Card[], colorToCount: CardColor): number {
-        let count = 0;
-        for (const card of cards) {
-            if (card[0] === colorToCount) { count++; }
-        }
-        return count;
     }
 
     /**

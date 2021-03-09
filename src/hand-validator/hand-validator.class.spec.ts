@@ -39,7 +39,7 @@ describe('detect pairs', () => {
 		])
 	});
 
-	it('should not detect non pairs if theere are nonee', () => {
+	it('should not detect non pairs if there are none', () => {
 		const cards: Card[] = [
 			[CardColor.HEARTS, CardValue.EIGHT],
 			[CardColor.HEARTS, CardValue.SEVEN],
