@@ -185,7 +185,7 @@ describe('straight', () => {
 			[CardColor.HEARTS, CardValue.SEVEN],
 			[CardColor.SPADES, CardValue.EIGHT],
 			[CardColor.CLUBS, CardValue.THREE],
-		]
+		];
 		const result = HandValidator.hasStraight(cards);
 		expect(result).toBeDefined();
 		const firstStraight = result![0];
@@ -195,7 +195,7 @@ describe('straight', () => {
 			[CardColor.CLUBS, CardValue.NINE],
 			[CardColor.HEARTS, CardValue.EIGHT],
 			[CardColor.HEARTS, CardValue.SEVEN],
-		])
+		]);
 	});
 
 	it('should detect straight (worst case)', () => {
@@ -388,8 +388,52 @@ describe('straight', () => {
 				[CardColor.SPADES, CardValue.FOUR],
 				[CardColor.DIAMONDS, CardValue.FOUR],
 			]);
-		})
+		});
+
+		it('should not find quads in a triplet', () => {
+			const cards: Card[] = [
+				[CardColor.HEARTS, CardValue.FOUR],
+				[CardColor.CLUBS, CardValue.FOUR],
+				[CardColor.DIAMONDS, CardValue.ACE],
+				[CardColor.HEARTS, CardValue.QUEEN],
+				[CardColor.SPADES, CardValue.QUEEN],
+				[CardColor.CLUBS, CardValue.QUEEN],
+				[CardColor.DIAMONDS, CardValue.FOUR],
+			];
+			const quad = HandValidator.hasQuads(cards);
+			expect(quad).toBeUndefined();
+		});
 
 	});
+
+	describe('straight flush', () => {
+
+		it('should detect straight flushes', () => {
+			const cards: Card[] = [
+				[CardColor.SPADES, CardValue.TEN],
+				[CardColor.CLUBS, CardValue.THREE],
+				[CardColor.SPADES, CardValue.NINE],
+				[CardColor.SPADES, CardValue.JACK],
+				[CardColor.SPADES, CardValue.SEVEN],
+				[CardColor.HEARTS, CardValue.EIGHT],
+				[CardColor.SPADES, CardValue.EIGHT],
+			];
+			const result = HandValidator.hasStraightFlush(cards);
+			expect(result).toBeDefined();
+			const firstStraight = result![0];
+			expect(firstStraight).toStrictEqual([
+				[CardColor.SPADES, CardValue.JACK],
+				[CardColor.SPADES, CardValue.TEN],
+				[CardColor.SPADES, CardValue.NINE],
+				[CardColor.SPADES, CardValue.EIGHT],
+				[CardColor.SPADES, CardValue.SEVEN],
+			]);
+		});
+
+	});
+
+	describe('royal flush', () => {
+
+	})
 
 });
