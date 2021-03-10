@@ -124,3 +124,26 @@ it('should have a flush', () => {
         ],
     });
 });
+
+it('should have a full house', () => {
+    const hand: [Card, Card] = [[CardColor.DIAMONDS, CardValue.QUEEN], [CardColor.HEARTS, CardValue.FIVE]];
+    const board: Card[] = [
+        [CardColor.DIAMONDS, CardValue.FIVE],
+        [CardColor.HEARTS, CardValue.QUEEN],
+        [CardColor.CLUBS, CardValue.QUEEN],
+        [CardColor.DIAMONDS, CardValue.EIGHT],
+        [CardColor.DIAMONDS, CardValue.SEVEN],
+    ];
+    const result = HandValidator.validateHand(hand, board);
+    expect(result).toStrictEqual({
+        hand: Hand.FULL_HOUSE,
+        highCard: [CardColor.DIAMONDS, CardValue.QUEEN],
+        result: [
+            [CardColor.DIAMONDS, CardValue.QUEEN],
+            [CardColor.HEARTS, CardValue.QUEEN],
+            [CardColor.CLUBS, CardValue.QUEEN],
+            [CardColor.HEARTS, CardValue.FIVE],
+            [CardColor.DIAMONDS, CardValue.FIVE],
+        ],
+    });
+});
