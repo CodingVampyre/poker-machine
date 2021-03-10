@@ -101,3 +101,26 @@ it('should have a straight', () => {
         ],
     });
 });
+
+it('should have a flush', () => {
+    const hand: [Card, Card] = [[CardColor.HEARTS, CardValue.SEVEN], [CardColor.HEARTS, CardValue.FIVE]];
+    const board: Card[] = [
+        [CardColor.HEARTS, CardValue.SIX],
+        [CardColor.HEARTS, CardValue.QUEEN],
+        [CardColor.HEARTS, CardValue.NINE],
+        [CardColor.DIAMONDS, CardValue.EIGHT],
+        [CardColor.DIAMONDS, CardValue.SEVEN],
+    ];
+    const result = HandValidator.validateHand(hand, board);
+    expect(result).toStrictEqual({
+        hand: Hand.FLUSH,
+        highCard: [CardColor.HEARTS, CardValue.SEVEN],
+        result: [
+            [CardColor.HEARTS, CardValue.QUEEN],
+            [CardColor.HEARTS, CardValue.NINE],
+            [CardColor.HEARTS, CardValue.SEVEN],
+            [CardColor.HEARTS, CardValue.SIX],
+            [CardColor.HEARTS, CardValue.FIVE],
+        ],
+    });
+});
