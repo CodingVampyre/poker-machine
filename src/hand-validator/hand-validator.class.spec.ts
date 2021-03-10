@@ -70,10 +70,10 @@ describe('detect two pairs', () => {
 		const result = HandValidator.hasTwoPairs(cards);
 		expect(result).toBeDefined();
 		expect(result).toStrictEqual([
-			[CardColor.HEARTS, CardValue.EIGHT],
-			[CardColor.CLUBS, CardValue.EIGHT],
 			[CardColor.CLUBS, CardValue.JACK],
 			[CardColor.SPADES, CardValue.JACK],
+			[CardColor.HEARTS, CardValue.EIGHT],
+			[CardColor.CLUBS, CardValue.EIGHT],
 		])
 	});
 

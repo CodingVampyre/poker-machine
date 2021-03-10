@@ -47,7 +47,7 @@ export class HandValidator {
         if (twoPairs !== undefined) { return { result: twoPairs, highCard: highCard, hand: Hand.TWO_PAIRS, } }
 
         // check one pair
-        const onePair = HandValidator.hasTwoPairs(cards);
+        const onePair = HandValidator.hasPair(cards);
         if (onePair !== undefined) { return { result: onePair, highCard: highCard, hand: Hand.ONE_PAIR, } }
 
         // return the highest card
@@ -61,7 +61,7 @@ export class HandValidator {
     public static hasPair(cards: Card[]): [Card, Card] | undefined {
         if (cards.length < 2) { return undefined; }
         // for all cards except for the last once since there is no follow up card
-        HandValidator.orderByValue(cards);
+        HandValidator.orderByValue(cards, 'desc');
         for (let i = 0; i < cards.length - 1; i++) {
             const cardA = cards[i];
             const cardB = cards[i + 1];
