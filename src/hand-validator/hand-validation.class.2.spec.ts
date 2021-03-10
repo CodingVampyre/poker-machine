@@ -194,3 +194,26 @@ it('should have quads ', () => {
 		],
 	});
 });
+
+it('should have straight flush', () => {
+	const hand: [Card, Card] = [[CardColor.SPADES, CardValue.EIGHT], [CardColor.SPADES, CardValue.TEN]];
+	const board: Card[] = [
+		[CardColor.SPADES, CardValue.SEVEN],
+		[CardColor.SPADES, CardValue.NINE],
+		[CardColor.DIAMONDS, CardValue.SEVEN],
+		[CardColor.CLUBS, CardValue.SEVEN],
+		[CardColor.SPADES, CardValue.JACK],
+	];
+	const result = HandValidator.validateHand(hand, board);
+	expect(result).toStrictEqual({
+		hand: Hand.STRAIGHT_FLUSH,
+		highCard: [CardColor.SPADES, CardValue.TEN],
+		result: [
+			[CardColor.SPADES, CardValue.JACK],
+			[CardColor.SPADES, CardValue.TEN],
+			[CardColor.SPADES, CardValue.NINE],
+			[CardColor.SPADES, CardValue.EIGHT],
+			[CardColor.SPADES, CardValue.SEVEN],
+		],
+	});
+});
