@@ -78,3 +78,26 @@ it('should evaluate triplets', () => {
         ],
     });
 });
+
+it('should have a straight', () => {
+    const hand: [Card, Card] = [[CardColor.HEARTS, CardValue.SEVEN], [CardColor.HEARTS, CardValue.FIVE]];
+    const board: Card[] = [
+        [CardColor.SPADES, CardValue.SIX],
+        [CardColor.HEARTS, CardValue.FOUR],
+        [CardColor.SPADES, CardValue.NINE],
+        [CardColor.DIAMONDS, CardValue.EIGHT],
+        [CardColor.DIAMONDS, CardValue.SEVEN],
+    ];
+    const result = HandValidator.validateHand(hand, board);
+    expect(result).toStrictEqual({
+        hand: Hand.STRAIGHT,
+        highCard: [CardColor.HEARTS, CardValue.SEVEN],
+        result: [
+            [CardColor.SPADES, CardValue.NINE],
+            [CardColor.DIAMONDS, CardValue.EIGHT],
+            [CardColor.HEARTS, CardValue.SEVEN],
+            [CardColor.SPADES, CardValue.SIX],
+            [CardColor.HEARTS, CardValue.FIVE],
+        ],
+    });
+});
