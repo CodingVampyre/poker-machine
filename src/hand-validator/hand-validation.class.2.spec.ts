@@ -171,4 +171,26 @@ describe('full house', () => {
 			],
 		});
 	});
-})
+});
+
+it('should have quads ', () => {
+	const hand: [Card, Card] = [[CardColor.DIAMONDS, CardValue.SIX], [CardColor.DIAMONDS, CardValue.ACE]];
+	const board: Card[] = [
+		[CardColor.SPADES, CardValue.SIX],
+		[CardColor.HEARTS, CardValue.SIX],
+		[CardColor.DIAMONDS, CardValue.THREE],
+		[CardColor.CLUBS, CardValue.SIX],
+		[CardColor.DIAMONDS, CardValue.FIVE],
+	];
+	const result = HandValidator.validateHand(hand, board);
+	expect(result).toStrictEqual({
+		hand: Hand.QUAD,
+		highCard: [CardColor.DIAMONDS, CardValue.ACE],
+		result: [
+			[CardColor.DIAMONDS, CardValue.SIX],
+			[CardColor.SPADES, CardValue.SIX],
+			[CardColor.HEARTS, CardValue.SIX],
+			[CardColor.CLUBS, CardValue.SIX],
+		],
+	});
+});
