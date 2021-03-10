@@ -148,4 +148,27 @@ describe('full house', () => {
 			],
 		});
 	});
+
+	it('should have a full house for two triplets', () => {
+		const hand: [Card, Card] = [[CardColor.DIAMONDS, CardValue.QUEEN], [CardColor.HEARTS, CardValue.FIVE]];
+		const board: Card[] = [
+			[CardColor.DIAMONDS, CardValue.FIVE],
+			[CardColor.HEARTS, CardValue.QUEEN],
+			[CardColor.CLUBS, CardValue.QUEEN],
+			[CardColor.DIAMONDS, CardValue.EIGHT],
+			[CardColor.CLUBS, CardValue.FIVE],
+		];
+		const result = HandValidator.validateHand(hand, board);
+		expect(result).toStrictEqual({
+			hand: Hand.FULL_HOUSE,
+			highCard: [CardColor.DIAMONDS, CardValue.QUEEN],
+			result: [
+				[CardColor.DIAMONDS, CardValue.QUEEN],
+				[CardColor.HEARTS, CardValue.QUEEN],
+				[CardColor.CLUBS, CardValue.QUEEN],
+				[CardColor.HEARTS, CardValue.FIVE],
+				[CardColor.DIAMONDS, CardValue.FIVE],
+			],
+		});
+	});
 })

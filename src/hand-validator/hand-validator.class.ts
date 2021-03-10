@@ -94,7 +94,7 @@ export class HandValidator {
      * @returns a tuble of three cards
      */
     public static hasTriplet(cards: Card[]): [Card, Card, Card] | undefined {
-        HandValidator.orderByValue(cards);
+        HandValidator.orderByValue(cards, 'desc');
         // check until prelast card
         for (let i = 0; i < cards.length - 2; i++) {
             // next and next next card should match with current
