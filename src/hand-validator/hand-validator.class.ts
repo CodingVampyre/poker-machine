@@ -14,6 +14,8 @@ export class HandValidator {
         const highCard = HandValidator.selectHighCard(hand);
         const cards = hand.concat(board);
 
+        HandValidator.orderByValue(cards, 'desc');
+
         // check from top to bottom, royal flush first
         const royalFlush = HandValidator.hasRoyalFlush(cards);
         if (royalFlush !== undefined) { return { result: royalFlush, highCard: highCard, hand: Hand.ROYAL_FLUSH } }
@@ -61,7 +63,6 @@ export class HandValidator {
     public static hasPair(cards: Card[]): [Card, Card] | undefined {
         if (cards.length < 2) { return undefined; }
         // for all cards except for the last once since there is no follow up card
-        HandValidator.orderByValue(cards, 'desc');
         for (let i = 0; i < cards.length - 1; i++) {
             const cardA = cards[i];
             const cardB = cards[i + 1];
@@ -75,7 +76,6 @@ export class HandValidator {
      * @returns borth pairs as a tuble of two cards
      */
     public static hasTwoPairs(cards: Card[]): Card[] | undefined {
-        HandValidator.orderByValue(cards);
         // check first pair
         const firstPair = HandValidator.hasPair(cards);
         if (firstPair === undefined) { return undefined }
@@ -94,7 +94,6 @@ export class HandValidator {
      * @returns a tuble of three cards
      */
     public static hasTriplet(cards: Card[]): [Card, Card, Card] | undefined {
-        HandValidator.orderByValue(cards, 'desc');
         // check until prelast card
         for (let i = 0; i < cards.length - 2; i++) {
             // next and next next card should match with current
@@ -112,7 +111,6 @@ export class HandValidator {
      */
     public static hasStraight(cards: Card[]): Card[][] | undefined {
         // order descending to find the highest straight
-        HandValidator.orderByValue(cards, 'desc');
         const cardsWithoutDuplicates = HandValidator.removeDuplicateValues(cards);
         const straights = [];
         if (cardsWithoutDuplicates.length < 5) { return undefined; }
@@ -133,7 +131,6 @@ export class HandValidator {
      * @returns 
      */
     public static hasFlush(cards: Card[]): Card[] | undefined {
-        HandValidator.orderByValue(cards, 'desc');
         for (const color of [CardColor.CLUBS, CardColor.DIAMONDS, CardColor.HEARTS, CardColor.SPADES]) {
             const cardsOfColor = HandValidator.retrieveCardsOfColor(cards, color);
             if (cardsOfColor.length >= 5) {
@@ -150,7 +147,6 @@ export class HandValidator {
      * @returns 
      */
     public static hasFullHouse(cards: Card[]): Card[] | undefined {
-        HandValidator.orderByValue(cards, 'desc');
         // check a triplet
         const triplet = HandValidator.hasTriplet(cards);
         if (triplet === undefined) { return undefined }
@@ -169,7 +165,6 @@ export class HandValidator {
      */
     public static hasQuads(cards: Card[]): [Card, Card, Card, Card] | undefined {
         if (cards.length < 4) { return undefined; }
-        HandValidator.orderByValue(cards, 'desc');
         for (let i = 0; i <= cards.length - 4; i++) {
             if (
                 cards[i][1] === cards[i + 1][1] &&
@@ -188,7 +183,6 @@ export class HandValidator {
      * @returns 
      */
     public static hasStraightFlush(cards: Card[]): Card[] | undefined {
-        HandValidator.orderByValue(cards, 'desc');
         // check for a straight
         for (const color of [CardColor.DIAMONDS, CardColor.SPADES, CardColor.HEARTS, CardColor.CLUBS]) {
             const cardsOfColor = HandValidator.retrieveCardsOfColor(cards, color);
@@ -207,7 +201,6 @@ export class HandValidator {
      * @returns 
      */
     public static hasRoyalFlush(cards: Card[]): Card[] | undefined {
-        HandValidator.orderByValue(cards, 'desc');
         const straightFlush = HandValidator.hasStraightFlush(cards);
         if (straightFlush === undefined) { return undefined; }
         if (straightFlush[0][1] === CardValue.ACE) {

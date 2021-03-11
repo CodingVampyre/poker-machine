@@ -13,6 +13,7 @@ describe('detect pairs', () => {
 			[CardColor.SPADES, CardValue.FOUR],
 			[CardColor.SPADES, CardValue.QUEEN],
 		]
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasPair(cards);
 		expect(result).toBeDefined();
 		expect(result).toStrictEqual([
@@ -31,6 +32,7 @@ describe('detect pairs', () => {
 			[CardColor.SPADES, CardValue.QUEEN],
 			[CardColor.CLUBS, CardValue.EIGHT],
 		]
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasPair(cards);
 		expect(result).toBeDefined();
 		expect(result).toStrictEqual([
@@ -49,6 +51,7 @@ describe('detect pairs', () => {
 			[CardColor.SPADES, CardValue.QUEEN],
 			[CardColor.CLUBS, CardValue.ACE],
 		]
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasPair(cards);
 		expect(result).toBeUndefined();
 	});
@@ -67,6 +70,7 @@ describe('detect two pairs', () => {
 			[CardColor.SPADES, CardValue.QUEEN],
 			[CardColor.CLUBS, CardValue.EIGHT],
 		]
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasTwoPairs(cards);
 		expect(result).toBeDefined();
 		expect(result).toStrictEqual([
@@ -87,6 +91,7 @@ describe('detect two pairs', () => {
 			[CardColor.SPADES, CardValue.QUEEN],
 			[CardColor.CLUBS, CardValue.ACE],
 		]
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasTwoPairs(cards);
 		expect(result).toBeUndefined();
 	});
@@ -105,6 +110,7 @@ describe('detect triplets', () => {
 			[CardColor.SPADES, CardValue.EIGHT],
 			[CardColor.CLUBS, CardValue.EIGHT],
 		]
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasTriplet(cards);
 		expect(result).toBeDefined();
 		expect(result).toStrictEqual([
@@ -124,6 +130,7 @@ describe('detect triplets', () => {
 			[CardColor.SPADES, CardValue.QUEEN],
 			[CardColor.CLUBS, CardValue.ACE],
 		]
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasTriplet(cards);
 		expect(result).toBeUndefined();
 	});
@@ -142,6 +149,7 @@ describe('straight', () => {
 			[CardColor.SPADES, CardValue.EIGHT],
 			[CardColor.CLUBS, CardValue.THREE],
 		]
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasStraight(cards);
 		expect(result).toBeDefined();
 		const firstStraight = result![0];
@@ -164,6 +172,7 @@ describe('straight', () => {
 			[CardColor.CLUBS, CardValue.THREE],
 			[CardColor.DIAMONDS, CardValue.FIVE],
 		]
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasStraight(cards);
 		expect(result).toBeDefined();
 		const firstStraight = result![0];
@@ -186,6 +195,7 @@ describe('straight', () => {
 			[CardColor.SPADES, CardValue.EIGHT],
 			[CardColor.CLUBS, CardValue.THREE],
 		];
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasStraight(cards);
 		expect(result).toBeDefined();
 		const firstStraight = result![0];
@@ -208,6 +218,7 @@ describe('straight', () => {
 			[CardColor.SPADES, CardValue.EIGHT],
 			[CardColor.CLUBS, CardValue.THREE],
 		]
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasStraight(cards);
 		expect(result).toBeUndefined();
 	});
@@ -222,6 +233,7 @@ describe('straight', () => {
 			[CardColor.SPADES, CardValue.SIX],
 			[CardColor.CLUBS, CardValue.EIGHT],
 		];
+		HandValidator.orderByValue(cards, 'desc');
 		const result = HandValidator.hasStraight(cards);
 		expect(result).toBeDefined();
 		const [first, second, third] = result!;
@@ -260,6 +272,7 @@ describe('straight', () => {
 				[CardColor.SPADES, CardValue.QUEEN],
 				[CardColor.SPADES, CardValue.EIGHT],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const flush = HandValidator.hasFlush(cards);
 			expect(flush).toBeDefined();
 			expect(flush).toStrictEqual([
@@ -281,6 +294,7 @@ describe('straight', () => {
 				[CardColor.SPADES, CardValue.QUEEN],
 				[CardColor.SPADES, CardValue.EIGHT],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const flush = HandValidator.hasFlush(cards);
 			expect(flush).toBeDefined();
 			expect(flush).toStrictEqual([
@@ -302,6 +316,7 @@ describe('straight', () => {
 				[CardColor.SPADES, CardValue.QUEEN],
 				[CardColor.SPADES, CardValue.EIGHT],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const flush = HandValidator.hasFlush(cards);
 			expect(flush).toBeDefined();
 			expect(flush).toStrictEqual([
@@ -323,6 +338,7 @@ describe('straight', () => {
 				[CardColor.SPADES, CardValue.QUEEN],
 				[CardColor.DIAMONDS, CardValue.EIGHT],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const flush = HandValidator.hasFlush(cards);
 			expect(flush).toBeUndefined();
 		});
@@ -341,6 +357,7 @@ describe('straight', () => {
 				[CardColor.SPADES, CardValue.QUEEN],
 				[CardColor.CLUBS, CardValue.EIGHT],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const fullHouse = HandValidator.hasFullHouse(cards);
 			expect(fullHouse).toBeDefined();
 			expect(fullHouse).toStrictEqual([
@@ -362,6 +379,7 @@ describe('straight', () => {
 				[CardColor.SPADES, CardValue.EIGHT],
 				[CardColor.CLUBS, CardValue.ACE],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const fullHouse = HandValidator.hasFullHouse(cards);
 			expect(fullHouse).toBeUndefined();
 		});
@@ -380,6 +398,7 @@ describe('straight', () => {
 				[CardColor.CLUBS, CardValue.QUEEN],
 				[CardColor.DIAMONDS, CardValue.FOUR],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const quad = HandValidator.hasQuads(cards);
 			expect(quad).toBeDefined();
 			expect(quad).toStrictEqual([
@@ -400,6 +419,7 @@ describe('straight', () => {
 				[CardColor.CLUBS, CardValue.QUEEN],
 				[CardColor.DIAMONDS, CardValue.FOUR],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const quad = HandValidator.hasQuads(cards);
 			expect(quad).toBeUndefined();
 		});
@@ -418,6 +438,7 @@ describe('straight', () => {
 				[CardColor.HEARTS, CardValue.EIGHT],
 				[CardColor.SPADES, CardValue.EIGHT],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const result = HandValidator.hasStraightFlush(cards);
 			expect(result).toBeDefined();
 			expect(result).toStrictEqual([
@@ -439,6 +460,7 @@ describe('straight', () => {
 				[CardColor.SPADES, CardValue.EIGHT],
 				[CardColor.SPADES, CardValue.SIX],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const result = HandValidator.hasStraightFlush(cards);
 			expect(result).toBeDefined();
 			expect(result).toStrictEqual([
@@ -460,6 +482,7 @@ describe('straight', () => {
 				[CardColor.HEARTS, CardValue.EIGHT],
 				[CardColor.SPADES, CardValue.SIX],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const result = HandValidator.hasStraightFlush(cards);
 			expect(result).toBeUndefined();
 		});
@@ -478,6 +501,7 @@ describe('straight', () => {
 				[CardColor.SPADES, CardValue.EIGHT],
 				[CardColor.SPADES, CardValue.SIX],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const result = HandValidator.hasRoyalFlush(cards);
 			expect(result).toBeDefined();
 			expect(result).toStrictEqual([
@@ -499,6 +523,7 @@ describe('straight', () => {
 				[CardColor.SPADES, CardValue.KING],
 				[CardColor.SPADES, CardValue.ACE],
 			];
+			HandValidator.orderByValue(cards, 'desc');
 			const result = HandValidator.hasRoyalFlush(cards);
 			expect(result).toBeDefined();
 			expect(result).toStrictEqual([
