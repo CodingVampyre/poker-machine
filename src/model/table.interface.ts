@@ -6,6 +6,14 @@ export enum TableMessage {
     NEW_GAME, // the game just has started, initial state
     NEW_ROUND, // a new round has started, initial state
     NEW_GO_THROUGH, // an exchange of betting, folding and calling/checking, gts: pre-flop, flop, turn, river
+    FLOP_REVEALED, // the flop was just uncovered
+    TURN_REVEALED, // the turn was just uncovered
+    RIVER_REVEALED, // the river was just uncovered
+    PLAYER_ACTION_DENIED, // an action a player provided was not possible
+    PLAYER_FOLDED, // player folded
+    PLAYER_CHECKED, // player checked
+    PLAYER_CALLED, // player called
+    PLAYER_RAISED, // player raised
     GO_TROUGH_FINISHED, // can now reveal flop, turn, river or end round
     ROUND_FINISHED, // a round has been finished, can now open flop, turn or river
     GAME_FINISHED, // last player standing or winning condition fulfilled
