@@ -1,20 +1,20 @@
 import {Card, CardColor, CardValue} from "../model/card.interface";
 
 /** An ordered deck of cards, ready to shuffle */
-export const Deck: Card[] = [
-    [CardColor.SPADES, CardValue.TWO],
-    [CardColor.SPADES, CardValue.THREE],
-    [CardColor.SPADES, CardValue.FOUR],
-    [CardColor.SPADES, CardValue.FIVE],
-    [CardColor.SPADES, CardValue.SIX],
-    [CardColor.SPADES, CardValue.SEVEN],
-    [CardColor.SPADES, CardValue.EIGHT],
-    [CardColor.SPADES, CardValue.NINE],
-    [CardColor.SPADES, CardValue.TEN],
-    [CardColor.SPADES, CardValue.JACK],
-    [CardColor.SPADES, CardValue.QUEEN],
-    [CardColor.SPADES, CardValue.KING],
-    [CardColor.SPADES, CardValue.ACE],
+const deck: Card[] = [
+    [CardColor.CLUBS, CardValue.TWO],
+    [CardColor.CLUBS, CardValue.THREE],
+    [CardColor.CLUBS, CardValue.FOUR],
+    [CardColor.CLUBS, CardValue.FIVE],
+    [CardColor.CLUBS, CardValue.SIX],
+    [CardColor.CLUBS, CardValue.SEVEN],
+    [CardColor.CLUBS, CardValue.EIGHT],
+    [CardColor.CLUBS, CardValue.NINE],
+    [CardColor.CLUBS, CardValue.TEN],
+    [CardColor.CLUBS, CardValue.JACK],
+    [CardColor.CLUBS, CardValue.QUEEN],
+    [CardColor.CLUBS, CardValue.KING],
+    [CardColor.CLUBS, CardValue.ACE],
 
     [CardColor.DIAMONDS, CardValue.TWO],
     [CardColor.DIAMONDS, CardValue.THREE],
@@ -44,17 +44,24 @@ export const Deck: Card[] = [
     [CardColor.HEARTS, CardValue.KING],
     [CardColor.HEARTS, CardValue.ACE],
 
-    [CardColor.CLUBS, CardValue.TWO],
-    [CardColor.CLUBS, CardValue.THREE],
-    [CardColor.CLUBS, CardValue.FOUR],
-    [CardColor.CLUBS, CardValue.FIVE],
-    [CardColor.CLUBS, CardValue.SIX],
-    [CardColor.CLUBS, CardValue.SEVEN],
-    [CardColor.CLUBS, CardValue.EIGHT],
-    [CardColor.CLUBS, CardValue.NINE],
-    [CardColor.CLUBS, CardValue.TEN],
-    [CardColor.CLUBS, CardValue.JACK],
-    [CardColor.CLUBS, CardValue.QUEEN],
-    [CardColor.CLUBS, CardValue.KING],
-    [CardColor.CLUBS, CardValue.ACE],
+    [CardColor.SPADES, CardValue.TWO],
+    [CardColor.SPADES, CardValue.THREE],
+    [CardColor.SPADES, CardValue.FOUR],
+    [CardColor.SPADES, CardValue.FIVE],
+    [CardColor.SPADES, CardValue.SIX],
+    [CardColor.SPADES, CardValue.SEVEN],
+    [CardColor.SPADES, CardValue.EIGHT],
+    [CardColor.SPADES, CardValue.NINE],
+    [CardColor.SPADES, CardValue.TEN],
+    [CardColor.SPADES, CardValue.JACK],
+    [CardColor.SPADES, CardValue.QUEEN],
+    [CardColor.SPADES, CardValue.KING],
+    [CardColor.SPADES, CardValue.ACE],
 ];
+
+/**
+ * creates a shallow copy
+ */
+export function createDeck(): Card[] {
+    return deck.slice();
+}
