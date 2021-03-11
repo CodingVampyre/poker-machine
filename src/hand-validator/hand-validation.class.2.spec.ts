@@ -217,3 +217,26 @@ it('should have straight flush', () => {
 		],
 	});
 });
+
+it('should have royal flush', () => {
+	const hand: [Card, Card] = [[CardColor.DIAMONDS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.ACE]];
+	const board: Card[] = [
+		[CardColor.DIAMONDS, CardValue.TEN],
+		[CardColor.HEARTS, CardValue.JACK],
+		[CardColor.DIAMONDS, CardValue.QUEEN],
+		[CardColor.DIAMONDS, CardValue.KING],
+		[CardColor.SPADES, CardValue.EIGHT],
+	];
+	const result = HandValidator.validateHand(hand, board);
+	expect(result).toStrictEqual({
+		hand: Hand.ROYAL_FLUSH,
+		highCard: [CardColor.DIAMONDS, CardValue.ACE],
+		result: [
+			[CardColor.DIAMONDS, CardValue.ACE],
+			[CardColor.DIAMONDS, CardValue.KING],
+			[CardColor.DIAMONDS, CardValue.QUEEN],
+			[CardColor.DIAMONDS, CardValue.JACK],
+			[CardColor.DIAMONDS, CardValue.TEN],
+		],
+	});
+});
