@@ -1,6 +1,6 @@
 import {Card, CardColor, CardValue} from "../model/card.interface";
 import {shuffle} from "./deck-shuffle.function";
-import {createDeck} from "./deck.object";
+import {createDeck} from "./create-deck.function";
 
 it('should shuffle numbers', () => {
    const numbers = [0, 1, 2, 3, 4];
