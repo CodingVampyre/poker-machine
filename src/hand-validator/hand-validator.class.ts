@@ -14,7 +14,7 @@ export class HandValidator {
         const highCard = HandValidator.selectHighCard(hand);
         const cards = hand.concat(board);
 
-        HandValidator.orderByValue(cards, 'desc');
+        HandValidator.orderByValue(cards);
 
         // check from top to bottom, royal flush first
         const royalFlush = HandValidator.hasRoyalFlush(cards);
@@ -219,20 +219,12 @@ export class HandValidator {
      * @param cards
      * @param mode
      */
-    public static orderByValue(cards: Card[], mode: 'asc' | 'desc' = 'asc') {
-        if (mode === 'asc') {
-            cards.sort((cardA, cardB) => {
-                if (cardA[1] < cardB[1]) { return -1; }
-                if (cardA[1] > cardB[1]) { return 1; }
-                return 0;
-            });
-        } else {
-            cards.sort((cardA, cardB) => {
-                if (cardA[1] > cardB[1]) { return -1; }
-                if (cardA[1] < cardB[1]) { return 1; }
-                return 0;
-            });
-        }
+    public static orderByValue(cards: Card[]) {
+        cards.sort((cardA, cardB) => {
+            if (cardA[1] > cardB[1]) { return -1; }
+            if (cardA[1] < cardB[1]) { return 1; }
+            return 0;
+        });
     }
 
     /**
