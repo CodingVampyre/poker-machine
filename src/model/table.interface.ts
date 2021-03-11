@@ -2,6 +2,15 @@ import { IBoard } from "./board.interface";
 import { IPlayer } from "./player.interface";
 import { IPot } from "./pot.interface";
 
+export enum TableMessage {
+    NEW_GAME, // the game just has started, initial state
+    NEW_ROUND, // a new round has started, initial state
+    NEW_GO_THROUGH, // an exchange of betting, folding and calling/checking, gts: pre-flop, flop, turn, river
+    GO_TROUGH_FINISHED, // can now reveal flop, turn, river or end round
+    ROUND_FINISHED, // a round has been finished, can now open flop, turn or river
+    GAME_FINISHED, // last player standing or winning condition fulfilled
+}
+
 // A table is the current state of a poker game.
 // It determines which player currently may act and what cards and bets are placed.
 export interface ITable {
@@ -17,4 +26,6 @@ export interface ITable {
     dealingPlayer: number;
     // how big the big blind is. Small blind is always half
     blindAmount: number;
+    // messages to help with gameplay
+    messages: TableMessage[];
 }

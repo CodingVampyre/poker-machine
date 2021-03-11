@@ -1,4 +1,5 @@
 import { ITable } from "../model/table.interface";
+import {IPlayerAction} from "../model/player-action.interface";
 
 export class BlackBox {
 
