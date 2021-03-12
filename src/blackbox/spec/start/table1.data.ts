@@ -61,6 +61,7 @@ const before: ITable = {
 	},
 	currentActingPlayer: 3,
 	dealingPlayer: 0,
+	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.NEW_GAME, TableMessage.NEW_ROUND, TableMessage.NEW_GO_THROUGH]
 }
@@ -125,6 +126,7 @@ const after: ITable = {
 	},
 	currentActingPlayer: 0,
 	dealingPlayer: 0,
+	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_CALLED]
 }
