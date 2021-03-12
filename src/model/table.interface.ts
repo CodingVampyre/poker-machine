@@ -15,7 +15,7 @@ export enum TableMessage {
     PLAYER_CALLED, // player called
     PLAYER_RAISED, // player raised
     GO_TROUGH_FINISHED, // can now reveal flop, turn, river or end round
-    ROUND_FINISHED, // a round has been finished, can now open flop, turn or river
+    ROUND_FINISHED, // a round has been finished, Reset Table and pass dealer chip on
     GAME_FINISHED, // last player standing or winning condition fulfilled
 }
 
@@ -30,8 +30,10 @@ export interface ITable {
     board: IBoard;
     // index of the players array. 
     currentActingPlayer: number;
-    // The deadler, next person is big blind, next person is small blind
+    // The dealer, next person is big blind, next person is small blind
     dealingPlayer: number;
+    // only if the big blind did something, every player had a chance to act
+    bigBlindHasActed: boolean;
     // how big the big blind is. Small blind is always half
     blindAmount: number;
     // messages to help with gameplay

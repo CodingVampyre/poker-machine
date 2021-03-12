@@ -6,7 +6,7 @@ const before: ITable = {
 		{
 			name: 'Jonny',
 			bankroll: 2000,
-			tokensOnTable: 100,
+			tokensOnTable: 0,
 			hand: [
 				[CardColor.HEARTS, CardValue.JACK],
 				[CardColor.HEARTS, CardValue.TWO],
@@ -24,7 +24,7 @@ const before: ITable = {
 		{
 			name: 'James',
 			bankroll: 1200,
-			tokensOnTable: 0,
+			tokensOnTable: 100,
 			hand: [
 				[CardColor.DIAMONDS, CardValue.EIGHT],
 				[CardColor.SPADES, CardValue.JACK],
@@ -59,18 +59,18 @@ const before: ITable = {
 			revealed: false,
 		},
 	},
-	currentActingPlayer: 2,
+	currentActingPlayer: 3,
 	dealingPlayer: 0,
 	blindAmount: 100,
 	messages: [TableMessage.NEW_GAME, TableMessage.NEW_ROUND, TableMessage.NEW_GO_THROUGH]
 }
 
-const after = {
+const after: ITable = {
 	players: [
 		{
 			name: 'Jonny',
 			bankroll: 2000,
-			tokensOnTable: 100,
+			tokensOnTable: 0,
 			hand: [
 				[CardColor.HEARTS, CardValue.JACK],
 				[CardColor.HEARTS, CardValue.TWO],
@@ -78,8 +78,8 @@ const after = {
 		},
 		{
 			name: 'Kevin',
-			bankroll: 2150,
-			tokensOnTable: 100,
+			bankroll: 2200,
+			tokensOnTable: 50,
 			hand: [
 				[CardColor.SPADES, CardValue.TEN],
 				[CardColor.CLUBS, CardValue.TEN],
@@ -88,7 +88,7 @@ const after = {
 		{
 			name: 'James',
 			bankroll: 1200,
-			tokensOnTable: 0,
+			tokensOnTable: 100,
 			hand: [
 				[CardColor.DIAMONDS, CardValue.EIGHT],
 				[CardColor.SPADES, CardValue.JACK],
@@ -97,14 +97,14 @@ const after = {
 		{
 			name: 'Jill',
 			bankroll: 8400,
-			tokensOnTable: 0,
+			tokensOnTable: 100,
 			hand: [
 				[CardColor.SPADES, CardValue.ACE],
 				[CardColor.HEARTS, CardValue.KING],
 			]
 		}
 	],
-	pots: [{ amount: 200, }],
+	pots: [{ amount: 250, }],
 	board: {
 		flop: {
 			cards: [
@@ -123,10 +123,10 @@ const after = {
 			revealed: false,
 		},
 	},
-	currentActingPlayer: 3,
+	currentActingPlayer: 0,
 	dealingPlayer: 0,
 	blindAmount: 100,
-	messages: [TableMessage.PLAYER_CALLED],
+	messages: [TableMessage.PLAYER_CALLED]
 }
 
 export { before, after };
