@@ -1,6 +1,7 @@
 import { IBoard } from "./board.interface";
 import { IPlayer } from "./player.interface";
 import { IPot } from "./pot.interface";
+import { Action } from "./player-action.interface";
 
 export enum TableMessage {
     NEW_GAME, // the game just has started, initial state
@@ -29,7 +30,12 @@ export interface ITable {
     // flop, turn and river
     board: IBoard;
     // index of the players array. 
-    currentActingPlayer: number;
+    currentActingPlayer: {
+        // position in player list to check which player may act
+        index: number;
+        // a list of possible actions, UI reasons
+        possibleActions: Action[],
+    };
     // The dealer, next person is big blind, next person is small blind
     dealingPlayer: number;
     // only if the big blind did something, every player had a chance to act
