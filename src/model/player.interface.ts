@@ -10,4 +10,6 @@ export interface IPlayer {
     tokensOnTable: number;
     // the two cards
     hand: [Card, Card];
+    // when a player folds, he is no longer participating and will not win that round
+    isParticipating: boolean;
 }
