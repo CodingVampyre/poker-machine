@@ -125,7 +125,7 @@ const tableState5: ITable = {
 	messages: [TableMessage.PLAYER_CHECKED, TableMessage.GO_TROUGH_FINISHED, TableMessage.NEW_GO_THROUGH]
 }
 
-export const bundles: Array<{
+export const Bundles: Array<{
 	tableBefore: ITable,
 	action: IPlayerAction,
 	tableAfter: ITable,
