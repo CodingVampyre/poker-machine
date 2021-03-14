@@ -35,6 +35,8 @@ export interface ITable {
         index: number;
         // a list of possible actions, UI reasons
         possibleActions: Action[],
+        // for ui reasons, this will be calculated beforehand, only visible if call is possible
+        tokensRequiredToCall?: number,
     };
     // The dealer, next person is big blind, next person is small blind
     dealingPlayer: number;

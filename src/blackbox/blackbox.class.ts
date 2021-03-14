@@ -1,10 +1,104 @@
-import { ITable } from "../model/table.interface";
-import {IPlayerAction} from "../model/player-action.interface";
+import {ITable, TableMessage} from "../model/table.interface";
+import {Action, IPlayerAction} from "../model/player-action.interface";
+import {IPlayer} from "../model/player.interface";
 
 export class BlackBox {
 
-    public static calculateNextState(action: IPlayerAction, table: ITable): ITable {
+    /**
+     * calculates the next state of a tablr
+     * @param action
+     * @param table
+     */
+    public static calculateNextState(action: IPlayerAction, table: ITable): ITable | undefined {
+
+        // VALIDATE ACTION AGAINST TABLE
+        const isValidAction = BlackBox.validate(action, table);
+        if (!isValidAction) { return undefined }
+
+        // PERFORM ACTION AND SIDE EFFECTS
+        return BlackBox.perform(action, table);
+    }
+
+    /**
+     * checks if a player can submit the provided action to the table
+     * @param action
+     * @param table
+     */
+    public static validate(action: IPlayerAction, table: ITable): boolean {
+        // Check if it is players turn
+        if (action.player !== table.currentActingPlayer.index) { return false; }
+
+        // check if player may perform action
+        if (!table.currentActingPlayer.possibleActions.includes(action.action)) { return false; }
+
+        // check if player has enough money for action
+        switch(action.action) {
+            case Action.FOLD: return table.players[action.player].isParticipating;
+            case Action.CHECK: return table.players[action.player].tokensOnTable === table.currentActingPlayer.tokensRequiredToCall;
+            case Action.CALL: return table.currentActingPlayer.tokensRequiredToCall !== undefined
+                && table.players[action.player].bankroll > table.currentActingPlayer.tokensRequiredToCall;
+            case Action.RAISE: return action.raiseAmount !== undefined
+                && table.players[action.player].bankroll >= action.raiseAmount;
+        }
+        return true;
+    }
+
+    public static perform(action: IPlayerAction, table: ITable): ITable {
+
+        // wipe messages
+        table.messages = [];
+
+        // variables
+        const currentActingPlayer = table.currentActingPlayer.index;
+
+        // switch between actions
+        switch(action.action) {
+            case Action.FOLD: {
+                table.players[currentActingPlayer].isParticipating = false;
+                table.messages.push(TableMessage.PLAYER_FOLDED);
+                break;
+            }
+            case Action.CHECK: {
+                table.messages.push(TableMessage.PLAYER_CHECKED);
+                break;
+            }
+            case Action.CALL: {
+                // remove tokens from bankroll and put them onto the table
+                if (table.currentActingPlayer.tokensRequiredToCall) {
+                    table.players[currentActingPlayer].bankroll -= table.currentActingPlayer.tokensRequiredToCall;
+                    table.players[currentActingPlayer].tokensOnTable += table.currentActingPlayer.tokensRequiredToCall;
+                    table.pots[0].amount += table.currentActingPlayer.tokensRequiredToCall;
+                    table.messages.push(TableMessage.PLAYER_CALLED);
+                }
+                break;
+            }
+            case Action.RAISE: break;
+            case Action.ALL_IN: break;
+        }
+
+        // if big blind did something and everyone has the same amount of money on the table, next go through
+
+        // check if a round is near it's end
+
+        // pass to next player
+        table.currentActingPlayer.index = (table.currentActingPlayer.index + 1) % table.players.length;
+
+        // calculations for next player
+
         return table;
+    }
+
+    /**
+     * returns how much the player must pay to call
+     * @param playerIndex the current player
+     * @param players all players participating in that game
+     * @private
+     */
+    private static getDifferenceToHighestBid(playerIndex: number, players: IPlayer[]): number {
+        const tokensOnTableForCurrentPlayer = players[playerIndex].tokensOnTable;
+        const tokensOfAllPlayers = players.map(player => player.tokensOnTable)
+        const maxTokensOfAnyPlayer = Math.max(...tokensOfAllPlayers);
+        return maxTokensOfAnyPlayer - tokensOnTableForCurrentPlayer;
     }
 
 }
