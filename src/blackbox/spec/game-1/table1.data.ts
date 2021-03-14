@@ -75,6 +75,31 @@ const tableState3: ITable = {
 	messages: [TableMessage.PLAYER_CALLED]
 }
 
+const action3: IPlayerAction = {
+	player: 1,
+	action: Action.CALL,
+}
+
+const tableState4: ITable = {
+	players: [
+		{ id: 'A', bankroll: 3000, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
+		{ id: 'B', bankroll: 3000, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
+		{ id: 'C', bankroll: 3000, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
+		{ id: 'D', bankroll: 3000, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+	],
+	dealingPlayer: 0,
+	pots: [{ amount: 400, }],
+	board: {
+		flop: { cards: [[CardColor.HEARTS, CardValue.TEN], [CardColor.DIAMONDS, CardValue.NINE], [CardColor.SPADES, CardValue.NINE],], revealed: false,},
+		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
+		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
+	},
+	currentActingPlayer: { index: 2, possibleActions: [Action.FOLD, Action.CHECK, Action.RAISE, Action.ALL_IN] },
+	bigBlindHasActed: false,
+	blindAmount: 100,
+	messages: [TableMessage.PLAYER_CALLED]
+}
+
 export const bundles: Array<{
 	tableBefore: ITable,
 	action: IPlayerAction,
@@ -89,5 +114,10 @@ export const bundles: Array<{
 		tableBefore: tableState2,
 		action: action2,
 		tableAfter: tableState3,
-	}
+	},
+	{
+		tableBefore: tableState3,
+		action: action3,
+		tableAfter: tableState4,
+	},
 ];
