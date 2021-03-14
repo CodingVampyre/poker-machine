@@ -80,10 +80,10 @@ export class BlackBox {
 
         // check if a round is near it's end
 
-        // pass to next player
-        table.currentActingPlayer.index = (table.currentActingPlayer.index + 1) % table.players.length;
-
         // calculations for next player
+        table.currentActingPlayer.index = (table.currentActingPlayer.index + 1) % table.players.length;
+        table.currentActingPlayer.possibleActions = BlackBox.calculatePossiblePlayerActions(table.currentActingPlayer.index, table);
+        table.currentActingPlayer.tokensRequiredToCall = BlackBox.getDifferenceToHighestBid(table.currentActingPlayer.index, table.players);
 
         return table;
     }
@@ -96,9 +96,38 @@ export class BlackBox {
      */
     private static getDifferenceToHighestBid(playerIndex: number, players: IPlayer[]): number {
         const tokensOnTableForCurrentPlayer = players[playerIndex].tokensOnTable;
-        const tokensOfAllPlayers = players.map(player => player.tokensOnTable)
-        const maxTokensOfAnyPlayer = Math.max(...tokensOfAllPlayers);
+        const maxTokensOfAnyPlayer = BlackBox.getHighestTokenOfAnyPlayer(players);
         return maxTokensOfAnyPlayer - tokensOnTableForCurrentPlayer;
     }
 
+    /**
+     *
+     * @param players
+     * @private
+     */
+    private static getHighestTokenOfAnyPlayer(players: IPlayer[]) {
+        const tokensOfAllPlayers = players.map(player => player.tokensOnTable)
+        return Math.max(...tokensOfAllPlayers);
+    }
+
+    /**
+     * looks on the actions a player may perform
+     * @param playerIndex
+     * @param table
+     * @private
+     */
+    private static calculatePossiblePlayerActions(playerIndex: number, table: ITable): Action[] {
+        if (!table.players[playerIndex].isParticipating) { return []; }
+        const actions: Action[] = [];
+        if (table.players[playerIndex].isParticipating) { actions.push(Action.FOLD); }
+        if (table.players[playerIndex].tokensOnTable === BlackBox.getHighestTokenOfAnyPlayer(table.players)) { actions.push(Action.CHECK); }
+        if (
+            table.players[playerIndex].tokensOnTable < BlackBox.getHighestTokenOfAnyPlayer(table.players) &&
+            table.players[playerIndex].bankroll > BlackBox.getDifferenceToHighestBid(playerIndex, table.players)
+        ) { actions.push(Action.CALL); }
+        if (
+            table.players[playerIndex].bankroll > BlackBox.getDifferenceToHighestBid(playerIndex, table.players)
+        ) { actions.push(Action.RAISE, Action.ALL_IN); }
+        return actions;
+    }
 }
