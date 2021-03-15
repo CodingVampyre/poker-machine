@@ -66,7 +66,17 @@ export class BlackBox {
                 }
                 break;
             }
-            case Action.RAISE: break;
+            case Action.RAISE: {
+                if (
+                    action.raiseAmount &&
+                    table.players[action.player].bankroll > action.raiseAmount
+                ) {
+                    table.players[action.player].bankroll -= action.raiseAmount;
+                    table.players[action.player].tokensOnTable += action.raiseAmount;
+                    table.pots[0].amount += action.raiseAmount;
+                    table.messages.push(TableMessage.PLAYER_RAISED);
+                }
+            }
             case Action.ALL_IN: break;
         }
 
