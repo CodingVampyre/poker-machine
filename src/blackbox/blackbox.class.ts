@@ -80,6 +80,8 @@ export class BlackBox {
         const differenceToHighestBid = BlackBox.getDifferenceToHighestBid(table.currentActingPlayer.index, table.players);
         if (differenceToHighestBid > 0) {
             table.currentActingPlayer.tokensRequiredToCall = differenceToHighestBid;
+        } else {
+            table.currentActingPlayer.tokensRequiredToCall = undefined;
         }
 
         return table;
