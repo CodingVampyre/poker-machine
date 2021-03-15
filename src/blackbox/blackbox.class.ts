@@ -32,15 +32,9 @@ export class BlackBox {
         if (!table.currentActingPlayer.possibleActions.includes(action.action)) { return false; }
 
         // check if player has enough money for action
-        switch(action.action) {
-            case Action.FOLD: return table.players[action.player].isParticipating;
-            case Action.CHECK: return table.players[action.player].tokensOnTable === table.currentActingPlayer.tokensRequiredToCall;
-            case Action.CALL: return table.currentActingPlayer.tokensRequiredToCall !== undefined
-                && table.players[action.player].bankroll > table.currentActingPlayer.tokensRequiredToCall;
-            case Action.RAISE: return action.raiseAmount !== undefined
-                && table.players[action.player].bankroll >= action.raiseAmount;
-        }
-        return true;
+        return BlackBox
+            .calculatePossiblePlayerActions(action.player, table)
+            .includes(action.action);
     }
 
     public static perform(action: IPlayerAction, table: ITable): ITable {
