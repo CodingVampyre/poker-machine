@@ -90,14 +90,19 @@ export class BlackBox {
         if (isNextStepAvailable) {
             if (!table.board.flop.revealed) {
                 table.board.flop.revealed = true;
+                table.messages.push(TableMessage.FLOP_REVEALED);
             }
             else if (!table.board.turn.revealed) {
                 table.board.turn.revealed = true;
+                table.messages.push(TableMessage.TURN_REVEALED);
             }
             else if (!table.board.river.revealed) {
                 table.board.river.revealed = true;
+                table.messages.push(TableMessage.RIVER_REVEALED);
             }
             table.bigBlindHasActed = false;
+            table.messages.push(TableMessage.GO_TROUGH_FINISHED);
+            table.messages.push(TableMessage.NEW_GO_THROUGH);
         }
 
         // check if a round is near it's end
