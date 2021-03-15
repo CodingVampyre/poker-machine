@@ -223,7 +223,7 @@ const tableState9: ITable = {
 	currentActingPlayer: { index: 3, possibleActions: [Action.FOLD, Action.CHECK, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
 	bigBlindHasActed: false,
 	blindAmount: 100,
-	messages: [TableMessage.PLAYER_FOLDED, TableMessage.GO_TROUGH_FINISHED, TableMessage.NEW_GO_THROUGH, TableMessage.TURN_REVEALED],
+	messages: [TableMessage.PLAYER_FOLDED, TableMessage.TURN_REVEALED, TableMessage.GO_TROUGH_FINISHED, TableMessage.NEW_GO_THROUGH],
 }
 
 const action9: IPlayerAction = {
