@@ -76,6 +76,7 @@ export class BlackBox {
                     table.pots[0].amount += action.raiseAmount;
                     table.messages.push(TableMessage.PLAYER_RAISED);
                 }
+                break;
             }
             case Action.ALL_IN: break;
         }
