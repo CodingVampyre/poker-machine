@@ -81,9 +81,15 @@ export class BlackBox {
         }
         const isNextStepAvailable = table.bigBlindHasActed && everyPlayerHasSameAmount;
         if (isNextStepAvailable) {
-            if (!table.board.flop.revealed) { table.board.flop.revealed = true; }
-            else if (!table.board.turn.revealed) { table.board.turn.revealed = true; }
-            else if (!table.board.river.revealed) { table.board.river.revealed = true; }
+            if (!table.board.flop.revealed) {
+                table.board.flop.revealed = true;
+            }
+            else if (!table.board.turn.revealed) {
+                table.board.turn.revealed = true;
+            }
+            else if (!table.board.river.revealed) {
+                table.board.river.revealed = true;
+            }
         }
 
         // check if a round is near it's end
