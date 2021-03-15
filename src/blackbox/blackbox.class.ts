@@ -70,6 +70,12 @@ export class BlackBox {
             case Action.ALL_IN: break;
         }
 
+        // check if big blind did something
+        const moveCount = table.players.length >= 3 ? 2 : 1;
+        const bigBlindPlayerIndex = (table.dealingPlayer + moveCount) % table.players.length;
+        if (action.player === bigBlindPlayerIndex) { table.bigBlindHasActed = true; }
+
+
         // if big blind did something and everyone has the same amount of money on the table, next go through
         let everyPlayerHasSameAmount = true;
         const highestTokenOfAnyPlayer = BlackBox.getHighestTokenOfAnyPlayer(table.players);
@@ -79,6 +85,7 @@ export class BlackBox {
                 break;
             }
         }
+        // unlock flop, turn and river
         const isNextStepAvailable = table.bigBlindHasActed && everyPlayerHasSameAmount;
         if (isNextStepAvailable) {
             if (!table.board.flop.revealed) {
@@ -90,6 +97,7 @@ export class BlackBox {
             else if (!table.board.river.revealed) {
                 table.board.river.revealed = true;
             }
+            table.bigBlindHasActed = false;
         }
 
         // check if a round is near it's end

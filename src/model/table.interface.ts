@@ -6,6 +6,7 @@ import { Action } from "./player-action.interface";
 export enum TableMessage {
     NEW_GAME, // the game just has started, initial state
     NEW_ROUND, // a new round has started, initial state
+    GO_TROUGH_FINISHED, // can now reveal flop, turn, river or end round
     NEW_GO_THROUGH, // an exchange of betting, folding and calling/checking, gts: pre-flop, flop, turn, river
     FLOP_REVEALED, // the flop was just uncovered
     TURN_REVEALED, // the turn was just uncovered
@@ -15,7 +16,6 @@ export enum TableMessage {
     PLAYER_CHECKED, // player checked
     PLAYER_CALLED, // player called
     PLAYER_RAISED, // player raised
-    GO_TROUGH_FINISHED, // can now reveal flop, turn, river or end round
     ROUND_FINISHED, // a round has been finished, Reset Table and pass dealer chip on
     GAME_FINISHED, // last player standing or winning condition fulfilled
 }
