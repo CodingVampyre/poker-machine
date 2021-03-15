@@ -83,7 +83,10 @@ export class BlackBox {
         // calculations for next player
         table.currentActingPlayer.index = (table.currentActingPlayer.index + 1) % table.players.length;
         table.currentActingPlayer.possibleActions = BlackBox.calculatePossiblePlayerActions(table.currentActingPlayer.index, table);
-        table.currentActingPlayer.tokensRequiredToCall = BlackBox.getDifferenceToHighestBid(table.currentActingPlayer.index, table.players);
+        const differenceToHighestBid = BlackBox.getDifferenceToHighestBid(table.currentActingPlayer.index, table.players);
+        if (differenceToHighestBid > 0) {
+            table.currentActingPlayer.tokensRequiredToCall = differenceToHighestBid > 0 ? differenceToHighestBid : undefined;
+        }
 
         return table;
     }
