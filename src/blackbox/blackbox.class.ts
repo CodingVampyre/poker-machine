@@ -71,6 +71,20 @@ export class BlackBox {
         }
 
         // if big blind did something and everyone has the same amount of money on the table, next go through
+        let everyPlayerHasSameAmount = true;
+        const highestTokenOfAnyPlayer = BlackBox.getHighestTokenOfAnyPlayer(table.players);
+        for (const player of table.players) {
+            if (player.isParticipating && player.tokensOnTable !== highestTokenOfAnyPlayer) {
+                everyPlayerHasSameAmount = false;
+                break;
+            }
+        }
+        const isNextStepAvailable = table.bigBlindHasActed && everyPlayerHasSameAmount;
+        if (isNextStepAvailable) {
+            if (!table.board.flop.revealed) { table.board.flop.revealed = true; }
+            else if (!table.board.turn.revealed) { table.board.turn.revealed = true; }
+            else if (!table.board.river.revealed) { table.board.river.revealed = true; }
+        }
 
         // check if a round is near it's end
 
