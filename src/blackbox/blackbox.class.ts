@@ -82,7 +82,7 @@ export class BlackBox {
         }
 
         // check if big blind did something
-        const moveCount = table.players.length >= 3 ? 2 : 1;
+        const moveCount = table.players.filter(player => player.isParticipating).length >= 3 ? 2 : 1;
         const bigBlindPlayerIndex = (table.dealingPlayer + moveCount) % table.players.length;
         if (action.player === bigBlindPlayerIndex) { table.bigBlindHasActed = true; }
 
@@ -116,10 +116,18 @@ export class BlackBox {
             table.messages.push(TableMessage.NEW_GO_THROUGH);
         }
 
-        // check if a round is near it's end
+        // check there are more then two players left
+        if (table.players.filter(player => player.isParticipating).length === 1) {
+            // player wins
+        }
 
         // calculations for next player
-        table.currentActingPlayer.index = (table.currentActingPlayer.index + 1) % table.players.length;
+        let canAct = false;
+        while (!canAct) {
+            table.currentActingPlayer.index = (table.currentActingPlayer.index + 1) % table.players.length;
+            if (table.players[table.currentActingPlayer.index].isParticipating) { canAct = true; }
+        }
+
         table.currentActingPlayer.possibleActions = BlackBox.calculatePossiblePlayerActions(table.currentActingPlayer.index, table);
         const differenceToHighestBid = BlackBox.getDifferenceToHighestBid(table.currentActingPlayer.index, table.players);
         if (differenceToHighestBid > 0) {
