@@ -97,7 +97,7 @@ export class BlackBox {
             }
         }
         // unlock flop, turn and river
-        const isNextStepAvailable = table.bigBlindHasActed && everyPlayerHasSameAmount;
+        const isNextStepAvailable = table.bigBlindHasActed && everyPlayerHasSameAmount; // BUG when big blind folded, who is the next to check?, maybe check while incrementing numbers?
         if (isNextStepAvailable) {
             if (!table.board.flop.revealed) {
                 table.board.flop.revealed = true;
