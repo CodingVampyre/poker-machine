@@ -122,12 +122,15 @@ export class BlackBox {
         }
 
         // calculations for next player
+
+        // select next player
         let canAct = false;
         while (!canAct) {
             table.currentActingPlayer.index = (table.currentActingPlayer.index + 1) % table.players.length;
             if (table.players[table.currentActingPlayer.index].isParticipating) { canAct = true; }
         }
 
+        // calculate possible actions and call value
         table.currentActingPlayer.possibleActions = BlackBox.calculatePossiblePlayerActions(table.currentActingPlayer.index, table);
         const differenceToHighestBid = BlackBox.getDifferenceToHighestBid(table.currentActingPlayer.index, table.players);
         if (differenceToHighestBid > 0) {

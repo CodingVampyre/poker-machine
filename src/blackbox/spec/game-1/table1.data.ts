@@ -7,10 +7,10 @@ import {Action, IPlayerAction} from "../../../model/player-action.interface";
  */
 const tableState1: ITable = {
 	players: [
-		{ id: 'A', bankroll: 3000, tokensOnTable: 0, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], },
-		{ id: 'B', bankroll: 2950, tokensOnTable: 50, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 3000, tokensOnTable: 0, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 3000, tokensOnTable: 0, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: false, },
+		{ id: 'B', bankroll: 2950, tokensOnTable: 50, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: false, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 3000, tokensOnTable: 0, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: false, }
 	],
 	pots: [{ amount: 150, }],
 	board: {
@@ -20,7 +20,6 @@ const tableState1: ITable = {
 	},
 	currentActingPlayer: { index: 3, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: 100, },
 	dealingPlayer: 0,
-	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.NEW_GAME, TableMessage.NEW_ROUND, TableMessage.NEW_GO_THROUGH]
 }
@@ -32,10 +31,10 @@ const action1: IPlayerAction = {
 
 const tableState2: ITable = {
 	players: [
-		{ id: 'A', bankroll: 3000, tokensOnTable: 0, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2950, tokensOnTable: 50, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 3000, tokensOnTable: 0, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: false, },
+		{ id: 'B', bankroll: 2950, tokensOnTable: 50, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: false, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 250, }],
@@ -45,7 +44,6 @@ const tableState2: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
 	currentActingPlayer: { index: 0, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: 100, },
-	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_CALLED]
 }
@@ -57,10 +55,10 @@ const action2: IPlayerAction = {
 
 const tableState3: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2950, tokensOnTable: 50, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: true, },
+		{ id: 'B', bankroll: 2950, tokensOnTable: 50, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: false, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 350, }],
@@ -70,7 +68,6 @@ const tableState3: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
 	currentActingPlayer: { index: 1, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: 50, },
-	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_CALLED]
 }
@@ -82,10 +79,10 @@ const action3: IPlayerAction = {
 
 const tableState4: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: true, },
+		{ id: 'B', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: true, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 400, }],
@@ -95,7 +92,6 @@ const tableState4: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
 	currentActingPlayer: { index: 2, possibleActions: [Action.FOLD, Action.CHECK, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
-	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_CALLED]
 }
@@ -107,10 +103,10 @@ const action4: IPlayerAction = {
 
 const tableState5: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: false, },
+		{ id: 'B', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: false, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: false, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 400, }],
@@ -120,7 +116,6 @@ const tableState5: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
 	currentActingPlayer: { index: 3, possibleActions: [Action.FOLD, Action.CHECK, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
-	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_CHECKED, TableMessage.FLOP_REVEALED, TableMessage.GO_TROUGH_FINISHED, TableMessage.NEW_GO_THROUGH]
 }
@@ -133,10 +128,10 @@ const action5: IPlayerAction = {
 
 const tableState6: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: false, },
+		{ id: 'B', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: false, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 500, }],
@@ -146,7 +141,6 @@ const tableState6: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
 	currentActingPlayer: { index: 0, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: 100 },
-	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_RAISED],
 }
@@ -158,10 +152,10 @@ const action6: IPlayerAction = {
 
 const tableState7: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: true, },
+		{ id: 'B', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: false, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 500, }],
@@ -171,7 +165,6 @@ const tableState7: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
 	currentActingPlayer: { index: 1, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: 100, },
-	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_FOLDED],
 }
@@ -183,10 +176,10 @@ const action7: IPlayerAction = {
 
 const tableState8: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: true, },
+		{ id: 'B', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: true, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 600, }],
@@ -196,7 +189,6 @@ const tableState8: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
 	currentActingPlayer: { index: 2, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: 100, },
-	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_CALLED],
 }
@@ -208,10 +200,10 @@ const action8: IPlayerAction = {
 
 const tableState9: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: false, },
+		{ id: 'B', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: false, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: false, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 600, }],
@@ -221,7 +213,6 @@ const tableState9: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
 	currentActingPlayer: { index: 3, possibleActions: [Action.FOLD, Action.CHECK, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
-	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_FOLDED, TableMessage.TURN_REVEALED, TableMessage.GO_TROUGH_FINISHED, TableMessage.NEW_GO_THROUGH],
 }
@@ -234,10 +225,10 @@ const action9: IPlayerAction = {
 
 const tableState10: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2700, tokensOnTable: 300, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: false, },
+		{ id: 'B', bankroll: 2800, tokensOnTable: 200, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: false, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2700, tokensOnTable: 300, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 700, }],
@@ -247,7 +238,6 @@ const tableState10: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
 	currentActingPlayer: { index: 1, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: 100 },
-	bigBlindHasActed: true,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_RAISED],
 }
@@ -259,10 +249,10 @@ const action10: IPlayerAction = {
 
 const tableState11: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2700, tokensOnTable: 300, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2700, tokensOnTable: 300, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: false, },
+		{ id: 'B', bankroll: 2700, tokensOnTable: 300, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: false, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2700, tokensOnTable: 300, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: false, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 800, }],
@@ -272,7 +262,6 @@ const tableState11: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: true, },
 	},
 	currentActingPlayer: { index: 3, possibleActions: [Action.FOLD, Action.CHECK, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
-	bigBlindHasActed: false,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_CALLED, TableMessage.GO_TROUGH_FINISHED, TableMessage.NEW_GO_THROUGH, TableMessage.RIVER_REVEALED],
 }
@@ -285,10 +274,10 @@ const action11: IPlayerAction = {
 
 const tableState12: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2700, tokensOnTable: 300, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2600, tokensOnTable: 400, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: false, },
+		{ id: 'B', bankroll: 2700, tokensOnTable: 300, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: false, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2600, tokensOnTable: 400, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 900, }],
@@ -298,7 +287,6 @@ const tableState12: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: true, },
 	},
 	currentActingPlayer: { index: 1, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: 100, },
-	bigBlindHasActed: true,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_RAISED],
 }
@@ -311,10 +299,10 @@ const action12: IPlayerAction = {
 
 const tableState13: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2500, tokensOnTable: 500, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2600, tokensOnTable: 400, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: false, },
+		{ id: 'B', bankroll: 2500, tokensOnTable: 500, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: true, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2600, tokensOnTable: 400, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 1100, }],
@@ -324,7 +312,6 @@ const tableState13: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: true, },
 	},
 	currentActingPlayer: { index: 3, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: 100, },
-	bigBlindHasActed: true,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_RAISED],
 }
@@ -336,10 +323,10 @@ const action13: IPlayerAction = {
 
 const tableState14: ITable = {
 	players: [
-		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],] },
-		{ id: 'B', bankroll: 2500, tokensOnTable: 500, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],] },
-		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],] },
-		{ id: 'D', bankroll: 2500, tokensOnTable: 500, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],] }
+		{ id: 'A', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: false, },
+		{ id: 'B', bankroll: 2500, tokensOnTable: 500, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: true, },
+		{ id: 'C', bankroll: 2900, tokensOnTable: 100, isParticipating: false, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 2500, tokensOnTable: 500, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
 	pots: [{ amount: 1200, }],
@@ -349,7 +336,6 @@ const tableState14: ITable = {
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: true, },
 	},
 	currentActingPlayer: { index: 1, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
-	bigBlindHasActed: true,
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_CALLED, TableMessage.GO_TROUGH_FINISHED, TableMessage.ROUND_FINISHED],
 }

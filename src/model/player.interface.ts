@@ -12,4 +12,6 @@ export interface IPlayer {
     hand: [Card, Card];
     // when a player folds, he is no longer participating and will not win that round
     isParticipating: boolean;
+    // if he is in the game, he should have a chance to act
+    hasActed: boolean;
 }

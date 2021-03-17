@@ -40,8 +40,6 @@ export interface ITable {
     };
     // The dealer, next person is big blind, next person is small blind
     dealingPlayer: number;
-    // only if the big blind did something, every player had a chance to act
-    bigBlindHasActed: boolean;
     // how big the big blind is. Small blind is always half
     blindAmount: number;
     // messages to help with gameplay
