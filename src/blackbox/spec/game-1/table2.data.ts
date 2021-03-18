@@ -40,9 +40,9 @@ const tableState2: ITable = {
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
-	currentActingPlayer: { index: 3, possibleActions: [Action.RAISE, Action.ALL_IN, Action.FOLD], tokensRequiredToCall: 100, },
+	currentActingPlayer: { index: 0, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: 100, },
 	blindAmount: 100,
-	messages: [TableMessage.NEW_ROUND],
+	messages: [TableMessage.PLAYER_ALL_IN],
 }
 
 export const Bundles: Array<{

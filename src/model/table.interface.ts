@@ -16,6 +16,7 @@ export enum TableMessage {
     PLAYER_CHECKED, // player checked
     PLAYER_CALLED, // player called
     PLAYER_RAISED, // player raised
+    PLAYER_ALL_IN,
     ROUND_FINISHED, // a round has been finished, Reset Table and pass dealer chip on
     GAME_FINISHED, // last player standing or winning condition fulfilled
 }

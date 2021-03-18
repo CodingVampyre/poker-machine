@@ -82,7 +82,24 @@ export class BlackBox {
                 }
                 break;
             }
-            case Action.ALL_IN: break;
+            case Action.ALL_IN: {
+                // set amount
+                const allInAmount = table.players[action.player].bankroll;
+                table.players[action.player].bankroll = 0;
+                table.players[action.player].tokensOnTable = allInAmount;
+                table.pots[0].amount += allInAmount;
+
+                // create new side pot
+                table.pots.unshift({
+                    amount: 0,
+                    forPlayers: table.players
+                        .filter((player, index) => player.isParticipating && player.bankroll > 0)
+                        .map((player, index) => index),
+                });
+
+                table.messages.push(TableMessage.PLAYER_ALL_IN);
+                break;
+            }
         }
         table.players[currentActingPlayer].hasActed = true;
 
