@@ -34,7 +34,7 @@ const tableState2: ITable = {
 		{ id: 'D', bankroll: 0, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
-	pots: [{ amount: 0, forPlayers: [0, 1, 2] }, { amount: 100, }],
+	pots: [{ amount: 0, forPlayers: [0, 1, 2] }, { amount: 100, }], // BUG this is not a correct pot!
 	board: {
 		flop: { cards: [[CardColor.HEARTS, CardValue.TEN], [CardColor.DIAMONDS, CardValue.NINE], [CardColor.SPADES, CardValue.NINE],], revealed: false,},
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
@@ -46,6 +46,7 @@ const tableState2: ITable = {
 }
 
 // TODO test with player A calling, player b calling and player c going all in. Player D should always stay in game
+// TODO next player should raise. Then the normal pot gets filled up, the side pot gets everything above the amount required by the first pot
 
 export const Bundles: Array<{
 	tableBefore: ITable,
