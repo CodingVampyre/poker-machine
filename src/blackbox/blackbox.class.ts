@@ -93,7 +93,7 @@ export class BlackBox {
                 table.pots.unshift({
                     amount: 0,
                     forPlayers: table.players
-                        .filter((player, index) => player.isParticipating && player.bankroll > 0)
+                        .filter((player) => player.isParticipating && player.bankroll > 0)
                         .map((player, index) => index),
                 });
 
