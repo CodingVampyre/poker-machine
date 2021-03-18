@@ -157,7 +157,7 @@ export class BlackBox {
         }
 
         // select next player
-        // TODO refactor to work without loop
+        // FIXME portential refactor to work without loop
         let canAct = false;
         while (!canAct) {
             table.currentActingPlayer.index = (table.currentActingPlayer.index + 1) % table.players.length;
