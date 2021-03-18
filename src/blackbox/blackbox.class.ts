@@ -128,6 +128,7 @@ export class BlackBox {
         // check there are more then two players left
         if (table.players.filter(player => player.isParticipating).length === 1) {
             // player wins
+            table.messages.push(TableMessage.ROUND_FINISHED);
         }
 
         // calculations for next player
