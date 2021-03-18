@@ -143,7 +143,7 @@ export class BlackBox {
         }
 
         // check there are more then two players left
-        if (table.players.filter(player => player.isParticipating).length === 1) {
+        if (table.players.filter(player => player.isParticipating && !BlackBox.isPlayerAllIn(player)).length === 1) {
             // player wins
             table.messages.push(TableMessage.ROUND_FINISHED);
         }
@@ -157,10 +157,13 @@ export class BlackBox {
         }
 
         // select next player
+        // TODO refactor to work without loop
         let canAct = false;
         while (!canAct) {
             table.currentActingPlayer.index = (table.currentActingPlayer.index + 1) % table.players.length;
-            if (table.players[table.currentActingPlayer.index].isParticipating) { canAct = true; }
+            const playerIsParticipating = table.players[table.currentActingPlayer.index].isParticipating;
+            const playerAllIn = BlackBox.isPlayerAllIn(table.players[table.currentActingPlayer.index]);
+            if (playerIsParticipating && !playerAllIn) { canAct = true; }
         }
 
         // calculate possible actions and call value
@@ -228,5 +231,14 @@ export class BlackBox {
         if (table.players[playerIndex].bankroll > 0) { actions.push(Action.ALL_IN); }
 
         return actions;
+    }
+
+    /**
+     * a player is all in when he has tokens on the table and no more tokens in a bank roll.
+     * He should stay in game until the end
+     * @param player
+     */
+    public static isPlayerAllIn(player: IPlayer) {
+        return player.tokensOnTable > 0 && player.bankroll === 0;
     }
 }

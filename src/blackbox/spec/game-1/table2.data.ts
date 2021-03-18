@@ -45,6 +45,8 @@ const tableState2: ITable = {
 	messages: [TableMessage.PLAYER_ALL_IN],
 }
 
+// TODO test with player A calling, player b calling and player c going all in. Player D should always stay in game
+
 export const Bundles: Array<{
 	tableBefore: ITable,
 	action: IPlayerAction,
