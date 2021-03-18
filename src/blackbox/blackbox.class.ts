@@ -131,6 +131,12 @@ export class BlackBox {
         }
 
         // calculations for next player
+        if(table.messages.includes(TableMessage.ROUND_FINISHED)) {
+            table.currentActingPlayer.possibleActions = [];
+            table.currentActingPlayer.index = -1;
+            table.currentActingPlayer.tokensRequiredToCall = undefined;
+            return table;
+        }
 
         // select next player
         let canAct = false;
