@@ -66,15 +66,18 @@ export class BlackBox {
                 }
                 break;
             }
-            case Action.RAISE: { // BUG if a player raises after another player raised too, first, the original amount must be called!
-                // FIXME potentially just add call value + raise amount before checking if player has enough and use that
+            case Action.RAISE: {
+                // raise amount is value to call + the amount you want to raise FROM THAT
+                const netRaiseAmount =
+                    (action.raiseAmount !== undefined ? action.raiseAmount : 0)
+                    + BlackBox.getDifferenceToHighestBid(action.player, table.players);
                 if (
-                    action.raiseAmount &&
-                    table.players[action.player].bankroll > action.raiseAmount
+                    netRaiseAmount > 0 &&
+                    table.players[action.player].bankroll > netRaiseAmount
                 ) {
-                    table.players[action.player].bankroll -= action.raiseAmount;
-                    table.players[action.player].tokensOnTable += action.raiseAmount;
-                    table.pots[0].amount += action.raiseAmount;
+                    table.players[action.player].bankroll -= netRaiseAmount;
+                    table.players[action.player].tokensOnTable += netRaiseAmount;
+                    table.pots[0].amount += netRaiseAmount;
                     table.messages.push(TableMessage.PLAYER_RAISED);
                 }
                 break;
