@@ -66,7 +66,8 @@ export class BlackBox {
                 }
                 break;
             }
-            case Action.RAISE: {
+            case Action.RAISE: { // BUG if a player raises after another player raised too, first, the original amount must be called!
+                // FIXME potentially just add call value + raise amount before checking if player has enough and use that
                 if (
                     action.raiseAmount &&
                     table.players[action.player].bankroll > action.raiseAmount
