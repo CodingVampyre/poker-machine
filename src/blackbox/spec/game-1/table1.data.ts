@@ -117,7 +117,7 @@ const tableState5: ITable = {
 	},
 	currentActingPlayer: { index: 3, possibleActions: [Action.FOLD, Action.CHECK, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
 	blindAmount: 100,
-	messages: [TableMessage.PLAYER_CHECKED, TableMessage.FLOP_REVEALED, TableMessage.GO_TROUGH_FINISHED, TableMessage.NEW_GO_THROUGH]
+	messages: [TableMessage.PLAYER_CHECKED, TableMessage.FLOP_REVEALED, TableMessage.NEW_GO_THROUGH, TableMessage.GO_TROUGH_FINISHED]
 }
 
 const action5: IPlayerAction = {
@@ -214,7 +214,7 @@ const tableState9: ITable = {
 	},
 	currentActingPlayer: { index: 3, possibleActions: [Action.FOLD, Action.CHECK, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
 	blindAmount: 100,
-	messages: [TableMessage.PLAYER_FOLDED, TableMessage.TURN_REVEALED, TableMessage.GO_TROUGH_FINISHED, TableMessage.NEW_GO_THROUGH],
+	messages: [TableMessage.PLAYER_FOLDED, TableMessage.TURN_REVEALED, TableMessage.NEW_GO_THROUGH, TableMessage.GO_TROUGH_FINISHED,],
 }
 
 const action9: IPlayerAction = {
@@ -263,7 +263,7 @@ const tableState11: ITable = {
 	},
 	currentActingPlayer: { index: 3, possibleActions: [Action.FOLD, Action.CHECK, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
 	blindAmount: 100,
-	messages: [TableMessage.PLAYER_CALLED, TableMessage.RIVER_REVEALED, TableMessage.GO_TROUGH_FINISHED, TableMessage.NEW_GO_THROUGH],
+	messages: [TableMessage.PLAYER_CALLED, TableMessage.RIVER_REVEALED, TableMessage.NEW_GO_THROUGH, TableMessage.GO_TROUGH_FINISHED,],
 }
 
 const action11: IPlayerAction = {
@@ -337,7 +337,7 @@ const tableState14: ITable = {
 	},
 	currentActingPlayer: { index: 1, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
 	blindAmount: 100,
-	messages: [TableMessage.PLAYER_CALLED, TableMessage.GO_TROUGH_FINISHED, TableMessage.ROUND_FINISHED],
+	messages: [TableMessage.PLAYER_CALLED, TableMessage.ROUND_FINISHED, TableMessage.GO_TROUGH_FINISHED],
 }
 
 export const Bundles: Array<{

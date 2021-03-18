@@ -104,20 +104,25 @@ export class BlackBox {
             if (!table.board.flop.revealed) {
                 table.board.flop.revealed = true;
                 table.messages.push(TableMessage.FLOP_REVEALED);
+                table.messages.push(TableMessage.NEW_GO_THROUGH);
             }
             else if (!table.board.turn.revealed) {
                 table.board.turn.revealed = true;
                 table.messages.push(TableMessage.TURN_REVEALED);
+                table.messages.push(TableMessage.NEW_GO_THROUGH);
             }
             else if (!table.board.river.revealed) {
                 table.board.river.revealed = true;
                 table.messages.push(TableMessage.RIVER_REVEALED);
+                table.messages.push(TableMessage.NEW_GO_THROUGH);
             }
+            else {
+                table.messages.push(TableMessage.ROUND_FINISHED);
+            }
+            table.messages.push(TableMessage.GO_TROUGH_FINISHED);
             for (const player of table.players) {
                 player.hasActed = false;
             }
-            table.messages.push(TableMessage.GO_TROUGH_FINISHED);
-            table.messages.push(TableMessage.NEW_GO_THROUGH);
         }
 
         // check there are more then two players left

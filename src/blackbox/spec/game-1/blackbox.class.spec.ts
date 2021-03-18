@@ -6,6 +6,6 @@ it.each(Bundles)('should simulate a complete game (Step %#)', (current) => {
 });
 
 it('should test that one', () => {
-    const current = Bundles[11];
+    const current = Bundles[12];
     expect(BlackBox.calculateNextState(current.action, current.tableBefore)).toStrictEqual(current.tableAfter);
 })
