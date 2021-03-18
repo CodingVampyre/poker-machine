@@ -189,15 +189,27 @@ export class BlackBox {
     private static calculatePossiblePlayerActions(playerIndex: number, table: ITable): Action[] {
         if (!table.players[playerIndex].isParticipating) { return []; }
         const actions: Action[] = [];
+
+        // a player can fold every time
         if (table.players[playerIndex].isParticipating) { actions.push(Action.FOLD); }
+
+        // can check if bid as much as the highest bidder
         if (table.players[playerIndex].tokensOnTable === BlackBox.getHighestTokenOfAnyPlayer(table.players)) { actions.push(Action.CHECK); }
+
+        // can call of below highest bid and enough money is there
         if (
             table.players[playerIndex].tokensOnTable < BlackBox.getHighestTokenOfAnyPlayer(table.players) &&
             table.players[playerIndex].bankroll > BlackBox.getDifferenceToHighestBid(playerIndex, table.players)
         ) { actions.push(Action.CALL); }
+
+        // can raise if bankroll is higher then the amount required to call
         if (
             table.players[playerIndex].bankroll > BlackBox.getDifferenceToHighestBid(playerIndex, table.players)
-        ) { actions.push(Action.RAISE, Action.ALL_IN); }
+        ) { actions.push(Action.RAISE); }
+
+        // Can always go all in if got money
+        if (table.players[playerIndex].bankroll > 0) { actions.push(Action.ALL_IN); }
+
         return actions;
     }
 }
