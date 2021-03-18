@@ -80,12 +80,10 @@ export class BlackBox {
             }
             case Action.ALL_IN: break;
         }
+        table.players[currentActingPlayer].hasActed = true;
 
-        // check if big blind did something
-        const moveCount = table.players.filter(player => player.isParticipating).length >= 3 ? 2 : 1;
-        const bigBlindPlayerIndex = (table.dealingPlayer + moveCount) % table.players.length;
-        if (action.player === bigBlindPlayerIndex) { table.bigBlindHasActed = true; }
-
+        // check if every player did something
+        const everyPlayerActed = table.players.filter(player => player.isParticipating && !player.hasActed).length === 0;
 
         // if big blind did something and everyone has the same amount of money on the table, next go through
         let everyPlayerHasSameAmount = true;
@@ -97,7 +95,7 @@ export class BlackBox {
             }
         }
         // unlock flop, turn and river
-        const isNextStepAvailable = table.bigBlindHasActed && everyPlayerHasSameAmount; // BUG when big blind folded, who is the next to check?, maybe check while incrementing numbers?
+        const isNextStepAvailable = everyPlayerActed && everyPlayerHasSameAmount;
         if (isNextStepAvailable) {
             if (!table.board.flop.revealed) {
                 table.board.flop.revealed = true;
@@ -111,7 +109,9 @@ export class BlackBox {
                 table.board.river.revealed = true;
                 table.messages.push(TableMessage.RIVER_REVEALED);
             }
-            table.bigBlindHasActed = false;
+            for (const player of table.players) {
+                player.hasActed = false;
+            }
             table.messages.push(TableMessage.GO_TROUGH_FINISHED);
             table.messages.push(TableMessage.NEW_GO_THROUGH);
         }
