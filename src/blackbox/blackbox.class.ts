@@ -89,7 +89,7 @@ export class BlackBox {
                 table.players[action.player].tokensOnTable = allInAmount;
                 table.pots[0].amount += allInAmount;
 
-                // create new side pot
+                // create new side pot for every player that can still participate
                 table.pots.unshift({
                     amount: 0,
                     forPlayers: table.players
