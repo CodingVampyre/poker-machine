@@ -34,7 +34,7 @@ const tableState2: ITable = {
 		{ id: 'D', bankroll: 0, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
-	pots: [{ amount: 0, forPlayers: [0, 1, 2] }, { amount: 250, }],
+	pots: [{ amount: 250, }, { amount: 0, forPlayers: [0, 1, 2] }],
 	board: {
 		flop: { cards: [[CardColor.HEARTS, CardValue.TEN], [CardColor.DIAMONDS, CardValue.NINE], [CardColor.SPADES, CardValue.NINE],], revealed: false,},
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },

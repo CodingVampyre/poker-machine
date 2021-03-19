@@ -90,7 +90,7 @@ export class BlackBox {
                 table.pots[0].amount += allInAmount;
 
                 // create new side pot for every player that can still participate
-                table.pots.unshift({
+                table.pots.push({
                     amount: 0,
                     forPlayers: table.players
                         .filter((player) => player.isParticipating && player.bankroll > 0)
