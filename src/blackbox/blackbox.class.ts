@@ -1,6 +1,7 @@
 import {ITable, TableMessage} from "../model/table.interface";
 import {Action, IPlayerAction} from "../model/player-action.interface";
 import {IPlayer} from "../model/player.interface";
+import {IPot} from "../model/pot.interface";
 
 export class BlackBox {
 
@@ -48,8 +49,11 @@ export class BlackBox {
         // switch between actions
         switch(action.action) {
             case Action.FOLD: {
+                // let player fold
                 table.players[currentActingPlayer].isParticipating = false;
                 table.messages.push(TableMessage.PLAYER_FOLDED);
+                // remove him from all split pods
+                table.pots = BlackBox.removePlayerFromPots(currentActingPlayer, table.pots);
                 break;
             }
             case Action.CHECK: {
@@ -157,7 +161,7 @@ export class BlackBox {
         }
 
         // select next player
-        // FIXME portential refactor to work without loop
+        // FIXME potential refactor to work without loop
         let canAct = false;
         while (!canAct) {
             table.currentActingPlayer.index = (table.currentActingPlayer.index + 1) % table.players.length;
@@ -240,5 +244,20 @@ export class BlackBox {
      */
     public static isPlayerAllIn(player: IPlayer) {
         return player.tokensOnTable > 0 && player.bankroll === 0;
+    }
+
+    /**
+     * removes a player from all pots
+     * @param currentActingPlayer
+     * @param pots
+     * @private
+     */
+    private static removePlayerFromPots(currentActingPlayer: number, pots: IPot[]) {
+        return pots.map(pot => {
+            if (pot.forPlayers !== undefined) {
+                pot.forPlayers = pot.forPlayers.filter(player => player !== currentActingPlayer);
+            }
+            return pot;
+        });
     }
 }

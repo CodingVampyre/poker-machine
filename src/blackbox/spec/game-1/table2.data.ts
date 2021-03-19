@@ -45,8 +45,39 @@ const tableState2: ITable = {
 	messages: [TableMessage.PLAYER_ALL_IN],
 }
 
-// TODO test with player A calling, player b calling and player c going all in. Player D should always stay in game
-// TODO next player should raise. Then the normal pot gets filled up, the side pot gets everything above the amount required by the first pot
+const action2: IPlayerAction = {
+	player: 0,
+	action: Action.FOLD,
+}
+
+const tableState3: ITable = {
+	players: [
+		{ id: 'A', bankroll: 200, tokensOnTable: 0, isParticipating: false, hand: [[CardColor.CLUBS, CardValue.JACK], [CardColor.DIAMONDS, CardValue.SEVEN],], hasActed: true, },
+		{ id: 'B', bankroll: 400, tokensOnTable: 50, isParticipating: true, hand: [[CardColor.HEARTS, CardValue.FOUR], [CardColor.CLUBS, CardValue.KING],], hasActed: false, },
+		{ id: 'C', bankroll: 800, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.DIAMONDS, CardValue.FOUR], [CardColor.CLUBS, CardValue.TWO],], hasActed: false, },
+		{ id: 'D', bankroll: 0, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
+	],
+	dealingPlayer: 0,
+	pots: [{ amount: 250, }, { amount: 0, forPlayers: [1, 2] }],
+	board: {
+		flop: { cards: [[CardColor.HEARTS, CardValue.TEN], [CardColor.DIAMONDS, CardValue.NINE], [CardColor.SPADES, CardValue.NINE],], revealed: false,},
+		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
+		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
+	},
+	currentActingPlayer: { index: 1, possibleActions: [Action.FOLD, Action.CALL, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: 50, },
+	blindAmount: 100,
+	messages: [TableMessage.PLAYER_FOLDED],
+}
+
+const action3: IPlayerAction = {
+	player: 1,
+	action: Action.ALL_IN,
+}
+
+const action4: IPlayerAction = {
+	player: 2,
+	action: Action.CALL,
+}
 
 export const Bundles: Array<{
 	tableBefore: ITable,
@@ -57,5 +88,10 @@ export const Bundles: Array<{
 		tableBefore: tableState1,
 		action: action1,
 		tableAfter: tableState2,
+	},
+	{
+		tableBefore: tableState2,
+		action: action2,
+		tableAfter: tableState3,
 	}
 ];
