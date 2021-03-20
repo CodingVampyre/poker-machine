@@ -2,8 +2,14 @@ import {ITable, TableMessage} from "../model/table.interface";
 import {Action, IPlayerAction} from "../model/player-action.interface";
 import {IPlayer} from "../model/player.interface";
 import {IPot} from "../model/pot.interface";
+import {ValidationPhase} from "./phases/validation-phase.class";
+import {IPhase} from "./phase.interface";
 
 export class BlackBox {
+
+    private static phases: IPhase[] = [
+        new ValidationPhase(),
+    ]
 
     /**
      * calculates the next state of a tablr
@@ -12,30 +18,15 @@ export class BlackBox {
      */
     public static calculateNextState(action: IPlayerAction, table: ITable): ITable | undefined {
 
-        // VALIDATE ACTION AGAINST TABLE
-        const isValidAction = BlackBox.validate(action, table);
-        if (!isValidAction) { return undefined }
+        // execute phases
+        let currentStateTable: ITable | undefined = table;
+        for (const phase of BlackBox.phases) {
+            currentStateTable = phase.execute(table, action);
+            if (currentStateTable === undefined) { return undefined; }
+        }
 
         // PERFORM ACTION AND SIDE EFFECTS
         return BlackBox.perform(action, table);
-    }
-
-    /**
-     * checks if a player can submit the provided action to the table
-     * @param action
-     * @param table
-     */
-    public static validate(action: IPlayerAction, table: ITable): boolean {
-        // Check if it is players turn
-        if (action.player !== table.currentActingPlayer.index) { return false; }
-
-        // check if player may perform action
-        if (!table.currentActingPlayer.possibleActions.includes(action.action)) { return false; }
-
-        // check if player has enough money for action
-        return BlackBox
-            .calculatePossiblePlayerActions(action.player, table)
-            .includes(action.action);
     }
 
     public static perform(action: IPlayerAction, table: ITable): ITable {
