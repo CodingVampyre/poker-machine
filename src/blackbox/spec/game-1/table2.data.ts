@@ -69,16 +69,6 @@ const tableState3: ITable = {
 	messages: [TableMessage.PLAYER_FOLDED],
 }
 
-const action3: IPlayerAction = {
-	player: 1,
-	action: Action.ALL_IN,
-}
-
-const action4: IPlayerAction = {
-	player: 2,
-	action: Action.CALL,
-}
-
 export const Bundles: Array<{
 	tableBefore: ITable,
 	action: IPlayerAction,
