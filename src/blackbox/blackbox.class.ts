@@ -124,6 +124,7 @@ export class BlackBox {
                 table.players[action.player].bankroll = 0;
                 table.players[action.player].tokensOnTable[0] = allInAmount; // bug all in logic is even more complex
                 table.pots[0].amount += allInAmount;
+                table.pots[0].potCap = allInAmount;
 
                 // create new side pot for every player that can still participate
                 table.pots.push({
