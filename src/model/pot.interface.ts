@@ -6,5 +6,5 @@ export interface IPot {
     amount: number;
     // when a player goes all in, the current pot will have his all in value as cap
     // everything above that gets added to a new side pot!
-    potCap?: number;
+    potCap: number | undefined;
 }

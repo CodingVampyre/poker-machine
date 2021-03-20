@@ -64,8 +64,23 @@ export class BlackBox {
                 // remove tokens from bankroll and put them onto the table
                 if (table.currentActingPlayer.tokensRequiredToCall) {
                     table.players[currentActingPlayer].bankroll -= table.currentActingPlayer.tokensRequiredToCall;
-                    table.players[currentActingPlayer].tokensOnTable += table.currentActingPlayer.tokensRequiredToCall;
-                    table.pots[0].amount += table.currentActingPlayer.tokensRequiredToCall;
+                    let remaining = table.currentActingPlayer.tokensRequiredToCall;
+                    for (const [index, pot] of table.pots.entries()) {
+                        if (pot.potCap !== undefined) {
+                            const deltaCap = pot.potCap - table.players[currentActingPlayer].tokensOnTable[index];
+                            // add as much money to the pot until cap is full, switch to next one
+                            if (deltaCap > 0) {
+                                // fill up the difference between cap and what is already in that pot
+                                table.players[currentActingPlayer].tokensOnTable[index] += deltaCap;
+                                remaining -= deltaCap;
+                            }
+                        } else {
+                            // add all the money to that pot
+                            table.players[currentActingPlayer].tokensOnTable[index] += remaining;
+                            pot.amount += remaining;
+                            break;
+                        }
+                    }
                     table.messages.push(TableMessage.PLAYER_CALLED);
                 }
                 break;
@@ -75,13 +90,30 @@ export class BlackBox {
                 const netRaiseAmount =
                     (action.raiseAmount !== undefined ? action.raiseAmount : 0)
                     + BlackBox.getDifferenceToHighestBid(action.player, table.players);
-                if (
-                    netRaiseAmount > 0 &&
-                    table.players[action.player].bankroll > netRaiseAmount
-                ) {
+                const isRaiseAmountEnough = netRaiseAmount > 0;
+                const isPlayerRichEnoughToRaise = table.players[action.player].bankroll > netRaiseAmount;
+                if (isRaiseAmountEnough && isPlayerRichEnoughToRaise) {
                     table.players[action.player].bankroll -= netRaiseAmount;
-                    table.players[action.player].tokensOnTable += netRaiseAmount;
-                    table.pots[0].amount += netRaiseAmount;
+                    let remaining = netRaiseAmount;
+                    // for every pot, fill it up
+                    // the last pot should get everything else
+                    for (const [index, pot] of table.pots.entries()) {
+                        // if there is a cap and the player has yet to fill it up
+                        if (pot.potCap !== undefined && table.players[currentActingPlayer].tokensOnTable[index] < pot.potCap) {
+                            const deltaCap = pot.potCap - table.players[currentActingPlayer].tokensOnTable[index];
+                            // fill it up and remove this difference from tokens for next pots
+                            table.players[currentActingPlayer].tokensOnTable[index] += deltaCap;
+                            remaining -= deltaCap;
+                        } else {
+                            // if there are tokens remaining, put them into the last pot
+                            if (remaining > 0) {
+                                pot.amount += remaining;
+                                table.players[currentActingPlayer].tokensOnTable[index] += remaining;
+                                remaining = 0;
+                            }
+                            break;
+                        }
+                    }
                     table.messages.push(TableMessage.PLAYER_RAISED);
                 }
                 break;
@@ -90,12 +122,13 @@ export class BlackBox {
                 // set amount
                 const allInAmount = table.players[action.player].bankroll;
                 table.players[action.player].bankroll = 0;
-                table.players[action.player].tokensOnTable = allInAmount;
+                table.players[action.player].tokensOnTable[0] = allInAmount; // bug all in logic is even more complex
                 table.pots[0].amount += allInAmount;
 
                 // create new side pot for every player that can still participate
                 table.pots.push({
                     amount: 0,
+                    potCap: undefined,
                     forPlayers: table.players
                         .filter((player) => player.isParticipating && player.bankroll > 0)
                         .map((player, index) => index),
@@ -114,7 +147,7 @@ export class BlackBox {
         let everyPlayerHasSameAmount = true;
         const highestTokenOfAnyPlayer = BlackBox.getHighestTokenOfAnyPlayer(table.players);
         for (const player of table.players) {
-            if (player.isParticipating && player.tokensOnTable !== highestTokenOfAnyPlayer) {
+            if (player.isParticipating && BlackBox.getTotalTokensOnTable(player) !== highestTokenOfAnyPlayer) {
                 everyPlayerHasSameAmount = false;
                 break;
             }
@@ -189,7 +222,7 @@ export class BlackBox {
      * @private
      */
     private static getDifferenceToHighestBid(playerIndex: number, players: IPlayer[]): number {
-        const tokensOnTableForCurrentPlayer = players[playerIndex].tokensOnTable;
+        const tokensOnTableForCurrentPlayer = BlackBox.getTotalTokensOnTable(players[playerIndex]);
         const maxTokensOfAnyPlayer = BlackBox.getHighestTokenOfAnyPlayer(players);
         return maxTokensOfAnyPlayer - tokensOnTableForCurrentPlayer;
     }
@@ -200,7 +233,7 @@ export class BlackBox {
      * @private
      */
     private static getHighestTokenOfAnyPlayer(players: IPlayer[]) {
-        const tokensOfAllPlayers = players.map(player => player.tokensOnTable)
+        const tokensOfAllPlayers = players.map(player => BlackBox.getTotalTokensOnTable(player));
         return Math.max(...tokensOfAllPlayers);
     }
 
@@ -218,11 +251,12 @@ export class BlackBox {
         if (table.players[playerIndex].isParticipating) { actions.push(Action.FOLD); }
 
         // can check if bid as much as the highest bidder
-        if (table.players[playerIndex].tokensOnTable === BlackBox.getHighestTokenOfAnyPlayer(table.players)) { actions.push(Action.CHECK); }
+        const isTokensOnTableEqualHighestToken = BlackBox.getTotalTokensOnTable(table.players[playerIndex]) === BlackBox.getHighestTokenOfAnyPlayer(table.players);
+        if (isTokensOnTableEqualHighestToken) { actions.push(Action.CHECK); }
 
         // can call of below highest bid and enough money is there
         if (
-            table.players[playerIndex].tokensOnTable < BlackBox.getHighestTokenOfAnyPlayer(table.players) &&
+            BlackBox.getTotalTokensOnTable(table.players[playerIndex]) < BlackBox.getHighestTokenOfAnyPlayer(table.players) &&
             table.players[playerIndex].bankroll > BlackBox.getDifferenceToHighestBid(playerIndex, table.players)
         ) { actions.push(Action.CALL); }
 
@@ -243,7 +277,8 @@ export class BlackBox {
      * @param player
      */
     public static isPlayerAllIn(player: IPlayer) {
-        return player.tokensOnTable > 0 && player.bankroll === 0;
+        const allTokensOnTable = player.tokensOnTable.reduce((previous, current) => previous + current);
+        return allTokensOnTable > 0 && player.bankroll === 0;
     }
 
     /**
@@ -259,5 +294,14 @@ export class BlackBox {
             }
             return pot;
         });
+    }
+
+    /**
+     *
+     * @param player
+     * @private
+     */
+    private static getTotalTokensOnTable(player: IPlayer) {
+        return player.tokensOnTable.reduce((tokens, current) => tokens + current);
     }
 }
