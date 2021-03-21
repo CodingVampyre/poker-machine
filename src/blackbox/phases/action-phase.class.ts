@@ -34,16 +34,16 @@ export class ActionPhase implements IPhase {
                     let remaining = table.currentActingPlayer.tokensRequiredToCall;
                     for (const [index, pot] of table.pots.entries()) {
                         if (pot.potCap !== undefined) {
-                            const deltaCap = pot.potCap - table.players[currentActingPlayer].tokensOnTable[index];
+                            const deltaCap = pot.potCap - table.players[currentActingPlayer].tokensOnTable;
                             // add as much money to the pot until cap is full, switch to next one
                             if (deltaCap > 0) {
                                 // fill up the difference between cap and what is already in that pot
-                                table.players[currentActingPlayer].tokensOnTable[index] += deltaCap;
+                                table.players[currentActingPlayer].tokensOnTable += deltaCap;
                                 remaining -= deltaCap;
                             }
                         } else {
                             // add all the money to that pot
-                            table.players[currentActingPlayer].tokensOnTable[index] += remaining;
+                            table.players[currentActingPlayer].tokensOnTable += remaining;
                             pot.amount += remaining;
                             break;
                         }
@@ -66,16 +66,16 @@ export class ActionPhase implements IPhase {
                     // the last pot should get everything else
                     for (const [index, pot] of table.pots.entries()) {
                         // if there is a cap and the player has yet to fill it up
-                        if (pot.potCap !== undefined && table.players[currentActingPlayer].tokensOnTable[index] < pot.potCap) {
-                            const deltaCap = pot.potCap - table.players[currentActingPlayer].tokensOnTable[index];
+                        if (pot.potCap !== undefined && table.players[currentActingPlayer].tokensOnTable < pot.potCap) {
+                            const deltaCap = pot.potCap - table.players[currentActingPlayer].tokensOnTable;
                             // fill it up and remove this difference from tokens for next pots
-                            table.players[currentActingPlayer].tokensOnTable[index] += deltaCap;
+                            table.players[currentActingPlayer].tokensOnTable += deltaCap;
                             remaining -= deltaCap;
                         } else {
                             // if there are tokens remaining, put them into the last pot
                             if (remaining > 0) {
                                 pot.amount += remaining;
-                                table.players[currentActingPlayer].tokensOnTable[index] += remaining;
+                                table.players[currentActingPlayer].tokensOnTable += remaining;
                                 remaining = 0;
                             }
                             break;
@@ -89,7 +89,7 @@ export class ActionPhase implements IPhase {
                 // set amount
                 const allInAmount = table.players[action.player].bankroll;
                 table.players[action.player].bankroll = 0;
-                table.players[action.player].tokensOnTable[0] = allInAmount; // bug all in logic is even more complex
+                table.players[action.player].tokensOnTable = allInAmount; // bug all in logic is even more complex
                 table.pots[0].amount += allInAmount;
                 table.pots[0].potCap = allInAmount;
 
@@ -133,18 +133,9 @@ export class ActionPhase implements IPhase {
      * @private
      */
     private static getDifferenceToHighestBid(playerIndex: number, players: IPlayer[]): number {
-        const tokensOnTableForCurrentPlayer = ActionPhase.getTotalTokensOnTable(players[playerIndex]);
+        const tokensOnTableForCurrentPlayer = players[playerIndex].tokensOnTable;
         const maxTokensOfAnyPlayer = ActionPhase.getHighestTokenOfAnyPlayer(players);
         return maxTokensOfAnyPlayer - tokensOnTableForCurrentPlayer;
-    }
-
-    /**
-     *
-     * @param player
-     * @private
-     */
-    private static getTotalTokensOnTable(player: IPlayer) {
-        return player.tokensOnTable.reduce((tokens, current) => tokens + current);
     }
 
     /**
@@ -153,7 +144,7 @@ export class ActionPhase implements IPhase {
      * @private
      */
     private static getHighestTokenOfAnyPlayer(players: IPlayer[]) {
-        const tokensOfAllPlayers = players.map(player => ActionPhase.getTotalTokensOnTable(player));
+        const tokensOfAllPlayers = players.map(player => player.tokensOnTable);
         return Math.max(...tokensOfAllPlayers);
     }
 

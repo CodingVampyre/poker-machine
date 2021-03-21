@@ -59,7 +59,7 @@ export class GoThroughCheckPhase implements IPhase {
      * @param player
      */
     public static isPlayerAllIn(player: IPlayer) {
-        const allTokensOnTable = player.tokensOnTable.reduce((previous, current) => previous + current);
+        const allTokensOnTable = player.tokensOnTable;
         return allTokensOnTable > 0 && player.bankroll === 0;
     }
 
@@ -79,6 +79,6 @@ export class GoThroughCheckPhase implements IPhase {
      * @private
      */
     private static getTotalTokensOnTable(player: IPlayer) {
-        return player.tokensOnTable.reduce((tokens, current) => tokens + current);
+        return player.tokensOnTable;
     }
 }

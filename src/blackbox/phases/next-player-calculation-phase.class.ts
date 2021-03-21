@@ -49,12 +49,12 @@ export class NextPlayerCalculationPhase implements IPhase {
         if (table.players[playerIndex].isParticipating) { actions.push(Action.FOLD); }
 
         // can check if bid as much as the highest bidder
-        const isTokensOnTableEqualHighestToken = NextPlayerCalculationPhase.getTotalTokensOnTable(table.players[playerIndex]) === NextPlayerCalculationPhase.getHighestTokenOfAnyPlayer(table.players);
+        const isTokensOnTableEqualHighestToken = table.players[playerIndex].tokensOnTable === NextPlayerCalculationPhase.getHighestTokenOfAnyPlayer(table.players);
         if (isTokensOnTableEqualHighestToken) { actions.push(Action.CHECK); }
 
         // can call of below highest bid and enough money is there
         if (
-            NextPlayerCalculationPhase.getTotalTokensOnTable(table.players[playerIndex]) < NextPlayerCalculationPhase.getHighestTokenOfAnyPlayer(table.players) &&
+            table.players[playerIndex].tokensOnTable < NextPlayerCalculationPhase.getHighestTokenOfAnyPlayer(table.players) &&
             table.players[playerIndex].bankroll > NextPlayerCalculationPhase.getDifferenceToHighestBid(playerIndex, table.players)
         ) { actions.push(Action.CALL); }
 
@@ -76,7 +76,7 @@ export class NextPlayerCalculationPhase implements IPhase {
      * @private
      */
     private static getDifferenceToHighestBid(playerIndex: number, players: IPlayer[]): number {
-        const tokensOnTableForCurrentPlayer = NextPlayerCalculationPhase.getTotalTokensOnTable(players[playerIndex]);
+        const tokensOnTableForCurrentPlayer = players[playerIndex].tokensOnTable;
         const maxTokensOfAnyPlayer = NextPlayerCalculationPhase.getHighestTokenOfAnyPlayer(players);
         return maxTokensOfAnyPlayer - tokensOnTableForCurrentPlayer;
     }
@@ -87,17 +87,8 @@ export class NextPlayerCalculationPhase implements IPhase {
      * @private
      */
     private static getHighestTokenOfAnyPlayer(players: IPlayer[]) {
-        const tokensOfAllPlayers = players.map(player => NextPlayerCalculationPhase.getTotalTokensOnTable(player));
+        const tokensOfAllPlayers = players.map(player => player.tokensOnTable);
         return Math.max(...tokensOfAllPlayers);
-    }
-
-    /**
-     *
-     * @param player
-     * @private
-     */
-    private static getTotalTokensOnTable(player: IPlayer) {
-        return player.tokensOnTable.reduce((tokens, current) => tokens + current);
     }
 
     /**
@@ -106,7 +97,7 @@ export class NextPlayerCalculationPhase implements IPhase {
      * @param player
      */
     public static isPlayerAllIn(player: IPlayer) {
-        const allTokensOnTable = player.tokensOnTable.reduce((previous, current) => previous + current);
+        const allTokensOnTable = player.tokensOnTable;
         return allTokensOnTable > 0 && player.bankroll === 0;
     }
 

@@ -34,12 +34,12 @@ export class ValidationPhase implements IPhase {
         if (table.players[playerIndex].isParticipating) { actions.push(Action.FOLD); }
 
         // can check if bid as much as the highest bidder
-        const isTokensOnTableEqualHighestToken = ValidationPhase.getTotalTokensOnTable(table.players[playerIndex]) === ValidationPhase.getHighestTokenOfAnyPlayer(table.players);
+        const isTokensOnTableEqualHighestToken = table.players[playerIndex].tokensOnTable === ValidationPhase.getHighestTokenOfAnyPlayer(table.players);
         if (isTokensOnTableEqualHighestToken) { actions.push(Action.CHECK); }
 
         // can call of below highest bid and enough money is there
         if (
-            ValidationPhase.getTotalTokensOnTable(table.players[playerIndex]) < ValidationPhase.getHighestTokenOfAnyPlayer(table.players) &&
+            table.players[playerIndex].tokensOnTable < ValidationPhase.getHighestTokenOfAnyPlayer(table.players) &&
             table.players[playerIndex].bankroll > ValidationPhase.getDifferenceToHighestBid(playerIndex, table.players)
         ) { actions.push(Action.CALL); }
 
@@ -56,20 +56,11 @@ export class ValidationPhase implements IPhase {
 
     /**
      *
-     * @param player
-     * @private
-     */
-    private static getTotalTokensOnTable(player: IPlayer) {
-        return player.tokensOnTable.reduce((tokens, current) => tokens + current);
-    }
-
-    /**
-     *
      * @param players
      * @private
      */
     private static getHighestTokenOfAnyPlayer(players: IPlayer[]) {
-        const tokensOfAllPlayers = players.map(player => ValidationPhase.getTotalTokensOnTable(player));
+        const tokensOfAllPlayers = players.map(player => player.tokensOnTable);
         return Math.max(...tokensOfAllPlayers);
     }
 
@@ -80,9 +71,8 @@ export class ValidationPhase implements IPhase {
      * @private
      */
     private static getDifferenceToHighestBid(playerIndex: number, players: IPlayer[]): number {
-        const tokensOnTableForCurrentPlayer = ValidationPhase.getTotalTokensOnTable(players[playerIndex]);
         const maxTokensOfAnyPlayer = ValidationPhase.getHighestTokenOfAnyPlayer(players);
-        return maxTokensOfAnyPlayer - tokensOnTableForCurrentPlayer;
+        return maxTokensOfAnyPlayer - players[playerIndex].tokensOnTable;
     }
 
 }
