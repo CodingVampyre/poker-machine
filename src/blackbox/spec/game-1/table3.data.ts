@@ -16,7 +16,7 @@ const tableState1: ITable = {
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
-	currentActingPlayer: { index: 3, possibleActions: [Action.ALL_IN, Action.FOLD], tokensRequiredToCall: 100, },
+	currentActingPlayer: { index: 3, possibleActions: [Action.FOLD, Action.ALL_IN], tokensRequiredToCall: undefined, },
 	blindAmount: 100,
 	messages: [TableMessage.NEW_ROUND],
 }
@@ -40,7 +40,7 @@ const tableState2: ITable = {
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
-	currentActingPlayer: { index: 0, possibleActions: [Action.FOLD, Action.ALL_IN], tokensRequiredToCall: 100, },
+	currentActingPlayer: { index: 0, possibleActions: [Action.FOLD, Action.ALL_IN], tokensRequiredToCall: undefined, },
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_ALL_IN],
 }
@@ -64,7 +64,7 @@ const tableState3: ITable = {
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
-	currentActingPlayer: { index: 1, possibleActions: [Action.ALL_IN, Action.FOLD], tokensRequiredToCall: 100, },
+	currentActingPlayer: { index: 1, possibleActions: [Action.FOLD, Action.ALL_IN], tokensRequiredToCall: undefined, },
 	blindAmount: 100,
 	messages: [],
 }
@@ -88,7 +88,7 @@ const tableState4: ITable = {
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
-	currentActingPlayer: { index: 2, possibleActions: [Action.CALL, Action.RAISE, Action.ALL_IN, Action.FOLD], tokensRequiredToCall: 100, },
+	currentActingPlayer: { index: 2, possibleActions: [Action.FOLD, Action.CHECK, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
 	blindAmount: 100,
 	messages: [],
 }
