@@ -15,8 +15,7 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 		.sort(sortByTokensOnTable); // smallest token count first
 	const sortedNormalPlayers = players
 		.slice()
-		.filter(player => player.bankroll > 0)
-		.sort(sortByTokensOnTable); // TODO do I have to sort?
+		.filter(player => player.bankroll > 0); // every other player
 
 	// for each player check if he is all in, fill and side pot
 	for (const [index, player] of sortedAllInPlayers.entries()) {
