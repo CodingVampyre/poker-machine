@@ -11,8 +11,8 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 	// sort players to tokens on table
 	const sortedAllInPlayers = players
 		.slice() // make a copy
-		.filter(player => player.bankroll === 0); // only players that are all in
-	sortedAllInPlayers.sort(sortByTokensOnTable); // smallest token count first
+		.filter(player => player.bankroll === 0) // only players that are all in
+		.sort(sortByTokensOnTable); // smallest token count first
 	const sortedNormalPlayers = players
 		.slice()
 		.filter(player => player.bankroll > 0); // every other player
@@ -39,6 +39,7 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 					.filter((player, allIndex) => allIndex >= index)
 					.map((_) => _.id)
 					.concat(sortedNormalPlayers.map((_, index) => index))
+					.sort((a, b) => a > b ? 1 : -1)
 			});
 		}
 
