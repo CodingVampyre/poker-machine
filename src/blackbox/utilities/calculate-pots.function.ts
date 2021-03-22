@@ -23,7 +23,7 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 		// Fill all pots with cap
 		for (const pot of pots) {
 			if (pot.potCap !== undefined) {
-				const amount = pot.potCap - player.tokensOnTable;
+				const amount = pot.potCap;
 				pot.amount += amount;
 				player.tokensOnTable -= amount;
 			}
@@ -37,7 +37,7 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 				amount: remainingAmount,
 				forPlayers: sortedAllInPlayers
 					.filter((player, allIndex) => allIndex >= index)
-					.map((_, index) => index)
+					.map((_) => _.id)
 					.concat(sortedNormalPlayers.map((_, index) => index))
 			});
 		}

@@ -8,15 +8,15 @@ describe('calculate all in pots', () => {
 	it('should handle ascending all ins', () => {
 		const players: IPlayer[] = [
 			{
-				id: 'A', isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.KING], [CardColor.HEARTS, CardValue.KING]],
+				id: 0, isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.KING], [CardColor.HEARTS, CardValue.KING]],
 				bankroll: 0, tokensOnTable: 10,
 			},
 			{
-				id: 'B', isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.QUEEN], [CardColor.HEARTS, CardValue.QUEEN]],
+				id: 1, isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.QUEEN], [CardColor.HEARTS, CardValue.QUEEN]],
 				bankroll: 0, tokensOnTable: 20,
 			},
 			{
-				id: 'B', isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.QUEEN], [CardColor.HEARTS, CardValue.QUEEN]],
+				id: 2, isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.QUEEN], [CardColor.HEARTS, CardValue.QUEEN]],
 				bankroll: 0, tokensOnTable: 40,
 			}
 		];
@@ -32,15 +32,15 @@ describe('calculate all in pots', () => {
 	it('should handle descending all ins', () => {
 		const players: IPlayer[] = [
 			{
-				id: 'A', isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.KING], [CardColor.HEARTS, CardValue.KING]],
+				id: 0, isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.KING], [CardColor.HEARTS, CardValue.KING]],
 				bankroll: 0, tokensOnTable: 500,
 			},
 			{
-				id: 'B', isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.QUEEN], [CardColor.HEARTS, CardValue.QUEEN]],
+				id: 1, isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.QUEEN], [CardColor.HEARTS, CardValue.QUEEN]],
 				bankroll: 0, tokensOnTable: 250,
 			},
 			{
-				id: 'B', isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.QUEEN], [CardColor.HEARTS, CardValue.QUEEN]],
+				id: 2, isParticipating: true, hasActed: false, hand: [[CardColor.DIAMONDS, CardValue.QUEEN], [CardColor.HEARTS, CardValue.QUEEN]],
 				bankroll: 0, tokensOnTable: 100,
 			}
 		];

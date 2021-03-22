@@ -3,7 +3,7 @@ import { Card } from "./card.interface";
 // A player participating in a game of poker
 export interface IPlayer {
     // name of the player, mostly debug purposes for the blackbox
-    id: string;
+    id: number;
     // amount of tokes a player owns
     bankroll: number;
     // amount of money that player put out for each pot. this should be as long as the pot length itself
