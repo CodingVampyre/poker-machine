@@ -45,6 +45,9 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 
 	}
 
+	// create main pot
+	pots.push({ forPlayers: sortedNormalPlayers.map(p => p.id), amount: 0, potCap: undefined, });
+
 	// Fill pots for players that are not all in
 	for (const player of sortedNormalPlayers) {
 		for (const pot of pots) {
