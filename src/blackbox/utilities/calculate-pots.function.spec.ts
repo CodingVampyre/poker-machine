@@ -76,7 +76,7 @@ describe('calculate all in pots', () => {
 		];
 		const pots: IPot[] = [
 			{ potCap: 20, forPlayers: [0, 1, 2, 3], amount: 80, },
-			{ potCap: 10, forPlayers: [0, 1, 2], amount: 30, },
+			{ potCap: 10, forPlayers: [0, 2, 3], amount: 30, },
 			{ potCap: 10, forPlayers: [0, 2], amount: 20, },
 			{ potCap: undefined, forPlayers: [2], amount: 10 }
 		];

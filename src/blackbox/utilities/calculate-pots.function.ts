@@ -32,14 +32,15 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 		// And Create
 		if (player.tokensOnTable > 0) {
 			const remainingAmount = player.tokensOnTable;
+			const forPlayers = sortedAllInPlayers
+				.filter((player, allIndex) => allIndex >= index)
+				.map((_) => _.id)
+				.concat(sortedNormalPlayers.map((_) => _.id))
+				.sort((a, b) => a > b ? 1 : -1);
 			pots.push({
 				potCap: remainingAmount,
 				amount: remainingAmount,
-				forPlayers: sortedAllInPlayers
-					.filter((player, allIndex) => allIndex >= index)
-					.map((_) => _.id)
-					.concat(sortedNormalPlayers.map((_, index) => index))
-					.sort((a, b) => a > b ? 1 : -1)
+				forPlayers: forPlayers,
 			});
 		}
 
