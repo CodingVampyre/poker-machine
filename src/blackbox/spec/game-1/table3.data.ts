@@ -90,7 +90,7 @@ const tableState4: ITable = {
 	},
 	currentActingPlayer: { index: 2, possibleActions: [Action.FOLD, Action.CHECK, Action.RAISE, Action.ALL_IN], tokensRequiredToCall: undefined, },
 	blindAmount: 100,
-	messages: [],
+	messages: [TableMessage.PLAYER_ALL_IN],
 }
 
 const action4: IPlayerAction = {

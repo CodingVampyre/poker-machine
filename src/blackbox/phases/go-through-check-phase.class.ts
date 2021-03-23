@@ -44,8 +44,12 @@ export class GoThroughCheckPhase implements IPhase {
             }
         }
 
-        // check there are more then two players left
-        if (table.players.filter(player => player.isParticipating && !GoThroughCheckPhase.isPlayerAllIn(player)).length === 1) {
+        // select all players that participate and are not all in
+        const actingPlayers = table.players.filter(player => player.isParticipating && !GoThroughCheckPhase.isPlayerAllIn(player));
+        // if there is only one player left
+        const onlyLastPlayerStanding = actingPlayers.length === 1;
+        // wait until he has acted and then end the round
+        if (onlyLastPlayerStanding && actingPlayers[0].hasActed) {
             // player wins
             table.messages.push(TableMessage.ROUND_FINISHED);
         }
