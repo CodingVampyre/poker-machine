@@ -9,7 +9,7 @@ export class HandValidator {
      * @param board
      * @returns
      */
-    public static validateHand(hand: [Card, Card], board: Card[]): IHandValidationResult | undefined {
+    public static validateHand(hand: [Card, Card], board: Card[]): IHandValidationResult {
         // select the high card
         const highCard = HandValidator.selectHighCard(hand);
         const cards = hand.concat(board);
