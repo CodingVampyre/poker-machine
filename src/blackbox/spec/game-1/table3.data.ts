@@ -106,7 +106,13 @@ const tableState5: ITable = {
 		{ id: 3, bankroll: 0, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
-	pots: [],
+	pots: [
+		{ potCap: 50, forPlayers: [0, 1, 2, 3], amount: 0 },
+		{ potCap: 10, forPlayers: [1, 2, 3], amount: 0 },
+		{ potCap: 40, forPlayers: [2, 3], amount: 0 },
+		{ potCap: 800, forPlayers: [3], amount: 0 },
+		{ potCap: undefined, forPlayers: [], amount: 0 },
+	],
 	board: {
 		flop: { cards: [[CardColor.HEARTS, CardValue.TEN], [CardColor.DIAMONDS, CardValue.NINE], [CardColor.SPADES, CardValue.NINE],], revealed: true,},
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: true, },
@@ -114,7 +120,7 @@ const tableState5: ITable = {
 	},
 	currentActingPlayer: { index: -1, possibleActions: [], tokensRequiredToCall: undefined, },
 	blindAmount: 100,
-	messages: [TableMessage.ROUND_FINISHED, TableMessage.PLAYER_ALL_IN, TableMessage.FLOP_REVEALED, TableMessage.TURN_REVEALED, TableMessage.RIVER_REVEALED],
+	messages: [TableMessage.PLAYER_ALL_IN, TableMessage.ROUND_FINISHED, TableMessage.FLOP_REVEALED, TableMessage.TURN_REVEALED, TableMessage.RIVER_REVEALED],
 }
 
 export const Bundles: Array<{

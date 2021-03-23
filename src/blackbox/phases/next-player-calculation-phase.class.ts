@@ -6,7 +6,22 @@ import {IPlayer} from "../../model/player.interface";
 export class NextPlayerCalculationPhase implements IPhase {
     public execute(table: ITable, action: IPlayerAction): ITable | undefined {
         // calculations for next player
-        if(table.messages.includes(TableMessage.ROUND_FINISHED)) {
+
+        // end round if no player can act
+        const playersThatCanAct = table.players.filter(player => player.isParticipating && player.bankroll !== 0).map(p => p.id);
+        if (playersThatCanAct.length === 0) { table.messages.push(TableMessage.ROUND_FINISHED); }
+
+        // nullify current acting player
+        if (table.messages.includes(TableMessage.ROUND_FINISHED)) {
+            // unveal all
+            table.board.flop.revealed = true;
+            table.messages.push(TableMessage.FLOP_REVEALED);
+            table.board.turn.revealed = true;
+            table.messages.push(TableMessage.TURN_REVEALED);
+            table.board.river.revealed = true;
+            table.messages.push(TableMessage.RIVER_REVEALED);
+
+            // reset player
             table.currentActingPlayer.possibleActions = [];
             table.currentActingPlayer.index = -1;
             table.currentActingPlayer.tokensRequiredToCall = undefined;
