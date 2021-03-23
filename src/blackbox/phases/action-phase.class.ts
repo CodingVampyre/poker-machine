@@ -3,6 +3,7 @@ import {Action, IPlayerAction} from "../../model/player-action.interface";
 import {ITable, TableMessage} from "../../model/table.interface";
 import {IPot} from "../../model/pot.interface";
 import {IPlayer} from "../../model/player.interface";
+import {calculatePots} from "../utilities/calculate-pots.function";
 
 export class ActionPhase implements IPhase {
     public execute(table: ITable, action: IPlayerAction): ITable | undefined {
@@ -19,8 +20,6 @@ export class ActionPhase implements IPhase {
                 // let player fold
                 table.players[currentActingPlayer].isParticipating = false;
                 table.messages.push(TableMessage.PLAYER_FOLDED);
-                // remove him from all split pods
-                table.pots = ActionPhase.removePlayerFromPots(currentActingPlayer, table.pots);
                 break;
             }
             case Action.CHECK: {
@@ -29,25 +28,9 @@ export class ActionPhase implements IPhase {
             }
             case Action.CALL: {
                 // remove tokens from bankroll and put them onto the table
-                if (table.currentActingPlayer.tokensRequiredToCall) {
+                if (table.currentActingPlayer.tokensRequiredToCall !== undefined) {
                     table.players[currentActingPlayer].bankroll -= table.currentActingPlayer.tokensRequiredToCall;
-                    let remaining = table.currentActingPlayer.tokensRequiredToCall;
-                    for (const [index, pot] of table.pots.entries()) {
-                        if (pot.potCap !== undefined) {
-                            const deltaCap = pot.potCap - table.players[currentActingPlayer].tokensOnTable;
-                            // add as much money to the pot until cap is full, switch to next one
-                            if (deltaCap > 0) {
-                                // fill up the difference between cap and what is already in that pot
-                                table.players[currentActingPlayer].tokensOnTable += deltaCap;
-                                remaining -= deltaCap;
-                            }
-                        } else {
-                            // add all the money to that pot
-                            table.players[currentActingPlayer].tokensOnTable += remaining;
-                            pot.amount += remaining;
-                            break;
-                        }
-                    }
+                    table.players[currentActingPlayer].tokensOnTable += table.currentActingPlayer.tokensRequiredToCall;
                     table.messages.push(TableMessage.PLAYER_CALLED);
                 }
                 break;
@@ -60,27 +43,8 @@ export class ActionPhase implements IPhase {
                 const isRaiseAmountEnough = netRaiseAmount > 0;
                 const isPlayerRichEnoughToRaise = table.players[action.player].bankroll > netRaiseAmount;
                 if (isRaiseAmountEnough && isPlayerRichEnoughToRaise) {
-                    table.players[action.player].bankroll -= netRaiseAmount;
-                    let remaining = netRaiseAmount;
-                    // for every pot, fill it up
-                    // the last pot should get everything else
-                    for (const [index, pot] of table.pots.entries()) {
-                        // if there is a cap and the player has yet to fill it up
-                        if (pot.potCap !== undefined && table.players[currentActingPlayer].tokensOnTable < pot.potCap) {
-                            const deltaCap = pot.potCap - table.players[currentActingPlayer].tokensOnTable;
-                            // fill it up and remove this difference from tokens for next pots
-                            table.players[currentActingPlayer].tokensOnTable += deltaCap;
-                            remaining -= deltaCap;
-                        } else {
-                            // if there are tokens remaining, put them into the last pot
-                            if (remaining > 0) {
-                                pot.amount += remaining;
-                                table.players[currentActingPlayer].tokensOnTable += remaining;
-                                remaining = 0;
-                            }
-                            break;
-                        }
-                    }
+                    table.players[currentActingPlayer].bankroll -= netRaiseAmount;
+                    table.players[currentActingPlayer].tokensOnTable += netRaiseAmount;
                     table.messages.push(TableMessage.PLAYER_RAISED);
                 }
                 break;
@@ -89,41 +53,15 @@ export class ActionPhase implements IPhase {
                 // set amount
                 const allInAmount = table.players[action.player].bankroll;
                 table.players[action.player].bankroll = 0;
-                table.players[action.player].tokensOnTable = allInAmount; // bug all in logic is even more complex
-                table.pots[0].amount += allInAmount;
-                table.pots[0].potCap = allInAmount;
-
-                // create new side pot for every player that can still participate
-                table.pots.push({
-                    amount: 0,
-                    potCap: undefined,
-                    forPlayers: table.players
-                        .filter((player) => player.isParticipating && player.bankroll > 0)
-                        .map((player, index) => index),
-                });
-
+                table.players[action.player].tokensOnTable = allInAmount;
                 table.messages.push(TableMessage.PLAYER_ALL_IN);
                 break;
             }
         }
+        table.pots = calculatePots(table.players);
         table.players[currentActingPlayer].hasActed = true;
 
         return table;
-    }
-
-    /**
-     * removes a player from all pots
-     * @param currentActingPlayer
-     * @param pots
-     * @private
-     */
-    private static removePlayerFromPots(currentActingPlayer: number, pots: IPot[]) {
-        return pots.map(pot => {
-            if (pot.forPlayers !== undefined) {
-                pot.forPlayers = pot.forPlayers.filter(player => player !== currentActingPlayer);
-            }
-            return pot;
-        });
     }
 
     /**
