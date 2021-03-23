@@ -51,18 +51,19 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 
 	// Fill pots for players that are not all in
 	for (const player of sortedNormalPlayers) {
+		let remaining = player.tokensOnTable;
 		for (const pot of pots) {
 			if (pot.potCap !== undefined) { // pot has a cap
 				// And if player has enough tokens to fill pot
-				const amount = Math.min(pot.potCap, player.tokensOnTable);
+				const amount = Math.min(pot.potCap, remaining);
 				pot.amount += amount;
-				player.tokensOnTable -= amount;
+				remaining -= amount;
 				// if player is out of money, cap!
 				if (player.tokensOnTable === 0) { break; }
 			} else { // player has more money then side pots need
-				const amount = player.tokensOnTable;
+				const amount = remaining;
 				pot.amount += amount;
-				player.tokensOnTable -= pot.amount;
+				remaining -= amount;
 			}
 		}
 	}
