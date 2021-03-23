@@ -107,10 +107,10 @@ const tableState5: ITable = {
 	],
 	dealingPlayer: 0,
 	pots: [
-		{ potCap: 50, forPlayers: [0, 1, 2, 3], amount: 0 },
-		{ potCap: 10, forPlayers: [1, 2, 3], amount: 0 },
-		{ potCap: 40, forPlayers: [2, 3], amount: 0 },
-		{ potCap: 800, forPlayers: [3], amount: 0 },
+		{ potCap: 50, forPlayers: [0, 1, 2, 3], amount: 200 },
+		{ potCap: 10, forPlayers: [1, 2, 3], amount: 30 },
+		{ potCap: 40, forPlayers: [2, 3], amount: 80 },
+		{ potCap: 800, forPlayers: [2], amount: 800 },
 		{ potCap: undefined, forPlayers: [], amount: 0 },
 	],
 	board: {
