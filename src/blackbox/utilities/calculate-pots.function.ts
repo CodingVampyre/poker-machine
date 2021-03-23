@@ -11,7 +11,7 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 	// sort players to tokens on table
 	const sortedAllInPlayers = players
 		.slice() // make a copy
-		.filter(player => player.bankroll === 0) // only players that are all in
+		.filter(player => player.bankroll === 0 && player.isParticipating) // only players that are all in
 		.sort(sortByTokensOnTable); // smallest token count first
 	const sortedNormalPlayers = players
 		.slice()
@@ -33,8 +33,7 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 		if (player.tokensOnTable > 0) {
 			const remainingAmount = player.tokensOnTable;
 			const forPlayers = sortedAllInPlayers
-				.filter((player, allIndex) => allIndex >= index)
-				.filter((player) => player.isParticipating)
+				.filter((player, allIndex) => allIndex >= index && player.isParticipating)
 				.map((_) => _.id)
 				.concat(sortedNormalPlayers.map((_) => _.id))
 				.sort((a, b) => a > b ? 1 : -1);
@@ -48,7 +47,10 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 	}
 
 	// create main pot
-	const forPlayers = sortedNormalPlayers.filter(p => p.isParticipating).map(p => p.id);
+	const forPlayers = sortedNormalPlayers
+		.filter(p => p.isParticipating)
+		.map(p => p.id);
+	console.debug(forPlayers);
 	pots.push({ forPlayers: forPlayers, amount: 0, potCap: undefined, });
 
 	// Fill pots for players that are not all in
