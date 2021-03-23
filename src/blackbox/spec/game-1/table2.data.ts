@@ -10,7 +10,7 @@ const tableState1: ITable = {
 		{ id: 3, bankroll: 100, tokensOnTable: 0, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: false, }
 	],
 	dealingPlayer: 0,
-	pots: [{ amount: 150, potCap: undefined }],
+	pots: [{ amount: 150, potCap: undefined, forPlayers: [0, 1, 2, 3] }],
 	board: {
 		flop: { cards: [[CardColor.HEARTS, CardValue.TEN], [CardColor.DIAMONDS, CardValue.NINE], [CardColor.SPADES, CardValue.NINE],], revealed: false,},
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
@@ -34,7 +34,7 @@ const tableState2: ITable = {
 		{ id: 3, bankroll: 0, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
-	pots: [{ amount: 250, potCap: 100, }, { amount: 0, forPlayers: [0, 1, 2], potCap: undefined, }],
+	pots: [{ amount: 250, potCap: 100, forPlayers: [0, 1, 2, 3] }, { amount: 0, forPlayers: [0, 1, 2], potCap: undefined, }],
 	board: {
 		flop: { cards: [[CardColor.HEARTS, CardValue.TEN], [CardColor.DIAMONDS, CardValue.NINE], [CardColor.SPADES, CardValue.NINE],], revealed: false,},
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
@@ -58,7 +58,7 @@ const tableState3: ITable = {
 		{ id: 3, bankroll: 0, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
-	pots: [{ amount: 250, potCap: 100, }, { amount: 0, forPlayers: [1, 2], potCap: undefined, }],
+	pots: [{ amount: 250, potCap: 100, forPlayers: [1, 2, 3] }, { amount: 0, forPlayers: [1, 2], potCap: undefined, }],
 	board: {
 		flop: { cards: [[CardColor.HEARTS, CardValue.TEN], [CardColor.DIAMONDS, CardValue.NINE], [CardColor.SPADES, CardValue.NINE],], revealed: false,},
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
