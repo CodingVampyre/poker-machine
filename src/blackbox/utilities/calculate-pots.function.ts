@@ -21,11 +21,12 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 	for (const [index, player] of sortedAllInPlayers.entries()) {
 
 		// Fill all pots with cap
+		let remaining = player.tokensOnTable;
 		for (const pot of pots) {
 			if (pot.potCap !== undefined) {
 				const amount = pot.potCap;
 				pot.amount += amount;
-				player.tokensOnTable -= amount;
+				remaining -= amount;
 			}
 		}
 

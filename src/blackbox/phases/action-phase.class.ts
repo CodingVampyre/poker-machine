@@ -1,7 +1,6 @@
 import {IPhase} from "../phase.interface";
 import {Action, IPlayerAction} from "../../model/player-action.interface";
 import {ITable, TableMessage} from "../../model/table.interface";
-import {IPot} from "../../model/pot.interface";
 import {IPlayer} from "../../model/player.interface";
 import {calculatePots} from "../utilities/calculate-pots.function";
 
