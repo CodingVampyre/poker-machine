@@ -34,9 +34,9 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 			const remainingAmount = player.tokensOnTable;
 			const forPlayers = sortedAllInPlayers
 				.filter((player, allIndex) => allIndex >= index && player.isParticipating)
-				.map((_) => _.id)
-				.concat(sortedNormalPlayers.map((_) => _.id))
-				.sort((a, b) => a > b ? 1 : -1);
+				.map(toId)
+				.concat(sortedNormalPlayers.filter(onlyParticipating).map(toId))
+				.sort(byNumberAsc);
 			pots.push({
 				potCap: remainingAmount,
 				amount: remainingAmount,
@@ -48,9 +48,8 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 
 	// create main pot
 	const forPlayers = sortedNormalPlayers
-		.filter(p => p.isParticipating)
-		.map(p => p.id);
-	console.debug(forPlayers);
+		.filter(onlyParticipating)
+		.map(toId);
 	pots.push({ forPlayers: forPlayers, amount: 0, potCap: undefined, });
 
 	// Fill pots for players that are not all in
@@ -80,3 +79,7 @@ function sortByTokensOnTable(a: IPlayer, b: IPlayer) {
 	if (a.tokensOnTable < b.tokensOnTable) { return -1; }
 	return 0;
 }
+
+function toId(player: IPlayer) { return player.id; }
+function onlyParticipating(player: IPlayer) { return player.isParticipating }
+function byNumberAsc(a: number, b: number) { return a > b ? 1 : -1 }
