@@ -31,8 +31,8 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 		}
 
 		// And Create
-		if (player.tokensOnTable > 0) {
-			const remainingAmount = player.tokensOnTable;
+		if (remaining > 0) {
+			const remainingAmount = remaining;
 			const forPlayers = sortedAllInPlayers
 				.filter((player, allIndex) => allIndex >= index && player.isParticipating)
 				.map(toId)
