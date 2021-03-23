@@ -52,7 +52,7 @@ export class ActionPhase implements IPhase {
                 // set amount
                 const allInAmount = table.players[action.player].bankroll;
                 table.players[action.player].bankroll = 0;
-                table.players[action.player].tokensOnTable = allInAmount;
+                table.players[action.player].tokensOnTable += allInAmount;
                 table.messages.push(TableMessage.PLAYER_ALL_IN);
                 break;
             }
