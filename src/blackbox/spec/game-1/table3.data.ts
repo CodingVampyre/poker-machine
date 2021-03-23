@@ -34,13 +34,13 @@ const tableState2: ITable = {
 		{ id: 3, bankroll: 0, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
-	pots: [{ amount: 250, potCap: 100 }, { amount: 0, potCap: undefined, forPlayers: [0, 1, 2] }],
+	pots: [{ amount: 250, potCap: 100, forPlayers: [0, 1, 2, 3] }, { amount: 0, potCap: undefined, forPlayers: [0, 1, 2] }],
 	board: {
 		flop: { cards: [[CardColor.HEARTS, CardValue.TEN], [CardColor.DIAMONDS, CardValue.NINE], [CardColor.SPADES, CardValue.NINE],], revealed: false,},
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
-	currentActingPlayer: { index: 0, possibleActions: [Action.FOLD, Action.ALL_IN], tokensRequiredToCall: undefined, },
+	currentActingPlayer: { index: 0, possibleActions: [Action.FOLD, Action.ALL_IN], tokensRequiredToCall: 100, },
 	blindAmount: 100,
 	messages: [TableMessage.PLAYER_ALL_IN],
 }
@@ -58,15 +58,15 @@ const tableState3: ITable = {
 		{ id: 3, bankroll: 0, tokensOnTable: 100, isParticipating: true, hand: [[CardColor.SPADES, CardValue.TEN], [CardColor.DIAMONDS, CardValue.QUEEN],], hasActed: true, }
 	],
 	dealingPlayer: 0,
-	pots: [{ amount: 150, potCap: 50, }, { amount: 150, potCap: 50, forPlayers: [1, 2, 3] }, { amount: 0, potCap: undefined, forPlayers: [1, 2] }],
+	pots: [{ amount: 150, potCap: 50, forPlayers: [0, 1, 2, 3] }, { amount: 150, potCap: 50, forPlayers: [1, 2, 3] }, { amount: 0, potCap: undefined, forPlayers: [1, 2] }],
 	board: {
 		flop: { cards: [[CardColor.HEARTS, CardValue.TEN], [CardColor.DIAMONDS, CardValue.NINE], [CardColor.SPADES, CardValue.NINE],], revealed: false,},
 		turn: { card: [CardColor.HEARTS, CardValue.FIVE], revealed: false, },
 		river: { card: [CardColor.DIAMONDS, CardValue.KING], revealed: false, },
 	},
-	currentActingPlayer: { index: 1, possibleActions: [Action.FOLD, Action.ALL_IN], tokensRequiredToCall: undefined, },
+	currentActingPlayer: { index: 1, possibleActions: [Action.FOLD, Action.ALL_IN], tokensRequiredToCall: 50, },
 	blindAmount: 100,
-	messages: [],
+	messages: [TableMessage.PLAYER_ALL_IN],
 }
 
 const action3: IPlayerAction = {

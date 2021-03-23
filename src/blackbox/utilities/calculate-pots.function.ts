@@ -62,7 +62,7 @@ export function calculatePots(players: IPlayer[]): IPot[] {
 				pot.amount += amount;
 				remaining -= amount;
 				// if player is out of money, cap!
-				if (player.tokensOnTable === 0) { break; }
+				if (remaining === 0) { break; }
 			} else { // player has more money then side pots need
 				const amount = remaining;
 				pot.amount += amount;
