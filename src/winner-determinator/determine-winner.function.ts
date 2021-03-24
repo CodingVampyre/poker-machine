@@ -30,11 +30,10 @@ export function determineWinner(table: ITable): number[][] {
 			[High/Ace]
 		]
 	 */
-	const sorted: number[][] = [];
-	let cursor = 0;
-	for (const result of results) {
 
-	}
+	// Sort
+
+	// Group Similar
 }
 
 function toId(player: IPlayer) { return player.id; }
