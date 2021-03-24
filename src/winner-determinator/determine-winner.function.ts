@@ -18,7 +18,7 @@ export function determineWinner(table: ITable): number[][] {
 	// for every player, calculate their result
 	const participatingPlayers = table.players.slice().filter(p => p.isParticipating);
 	const board: Card[] = [...table.board.flop.cards, table.board.turn.card, table.board.river.card];
-	const results = participatingPlayers.map(player => ({ result: HandValidator.validateHand(player.hand, board), player: player, }));
+	const results: IPlayerWithResult[] = participatingPlayers.map(player => ({ result: HandValidator.validateHand(player.hand, board), player: player, }));
 
 	/*
 		sort by result, if results are equal by kicker and if they are equal, put them side by side
@@ -35,6 +35,25 @@ export function determineWinner(table: ITable): number[][] {
 	results.sort(sortByBestHand);
 
 	// Group Similar
+	let index = 0;
+	const groupedBySimilarHands: IPlayerWithResult[][] = [];
+	for (const result of results) {
+		if (groupedBySimilarHands[index].length === 0) { groupedBySimilarHands[index].push(result); }
+		else {
+			const existingHand = groupedBySimilarHands[index][0].result.hand;
+			const existingKicker = groupedBySimilarHands[index][0].result.highCard[1];
+			const newHand = result.result.hand;
+			const newKicker = result.result.highCard[1];
+
+			// if hand is the same, group!
+			if (existingHand === newHand && existingKicker === newKicker) { groupedBySimilarHands[index].push(result); }
+			// else iterate and push
+			groupedBySimilarHands[++index].push(result);
+
+		}
+	}
+
+	return groupedBySimilarHands.map(similarHands => similarHands.map(result => result.player.id));
 }
 
 function toId(player: IPlayer) { return player.id; }
