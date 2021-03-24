@@ -4,6 +4,7 @@
   "description": "blackbox approach to poker simulation as state machine",
   "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "jest"
   },
   "keywords": [],
