@@ -1,15 +1,40 @@
 import {ITable} from "../model/table.interface";
 import {HandValidator} from "../hand-validator/hand-validator.class";
 import {Card} from "../model/card.interface";
+import {IHandValidationResult} from "../hand-validator/hand-validation-result.interface";
+import {IPlayer} from "../model/player.interface";
 
-export function determineWinner(table: ITable) {
-	// for every player, calculate their result
-	const board: Card[] = [...table.board.flop.cards, table.board.turn.card, table.board.river.card];
-	const results = table.players.map(player => HandValidator.validateHand(player.hand, board));
-
-	// check if two or more players share the same highest result
-
-	// compare their highest card
-
-	// if high card is equal, split pot
+interface IPlayerWithResult {
+	player: IPlayer;
+	result: IHandValidationResult;
 }
+
+/**
+ *
+ * @param table
+ * @return an ordered list with ids of players that won
+ */
+export function determineWinner(table: ITable): number[][] {
+	// for every player, calculate their result
+	const participatingPlayers = table.players.slice().filter(p => p.isParticipating);
+	const board: Card[] = [...table.board.flop.cards, table.board.turn.card, table.board.river.card];
+	const results = participatingPlayers.map(player => ({ result: HandValidator.validateHand(player.hand, board), player: player, }));
+
+	/*
+		sort by result, if results are equal by kicker and if they are equal, put them side by side
+		Structure Example
+		[
+			[Flush/King, Flush/King],
+			[Flush/Seven],
+			[Pair/Three, Pair/Three],
+			[High/Ace]
+		]
+	 */
+	const sorted: number[][] = [];
+	let cursor = 0;
+	for (const result of results) {
+
+	}
+}
+
+function toId(player: IPlayer) { return player.id; }
