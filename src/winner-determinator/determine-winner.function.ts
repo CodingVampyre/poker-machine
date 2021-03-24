@@ -10,7 +10,14 @@ interface IPlayerWithResult {
 }
 
 /**
- *
+ * sort by result, if results are equal by kicker and if they are equal, put them side by side
+ * Structure Example
+ * [
+ *     [Flush/King, Flush/King],
+ *	   [Flush/Seven],
+ *	   [Pair/Three, Pair/Three],
+ *	   [High/Ace]
+ * ]
  * @param table
  * @return an ordered list with ids of players that won
  */
@@ -19,21 +26,10 @@ export function determineWinner(table: ITable): number[][] {
 	const participatingPlayers = table.players.slice().filter(p => p.isParticipating);
 	const board: Card[] = [...table.board.flop.cards, table.board.turn.card, table.board.river.card];
 	const results: IPlayerWithResult[] = participatingPlayers.map(player => ({ result: HandValidator.validateHand(player.hand, board), player: player, }));
-	console.debug(results.map(r => JSON.stringify(r.result) + ' (' + r.player.id + ')'));
-
-	/*
-		sort by result, if results are equal by kicker and if they are equal, put them side by side
-		Structure Example
-		[
-			[Flush/King, Flush/King],
-			[Flush/Seven],
-			[Pair/Three, Pair/Three],
-			[High/Ace]
-		]
-	 */
 
 	// Sort
 	results.sort(sortByBestHand);
+	// console.debug(results.map(r => `Result: ${Hand[r.result.hand]} Kicker: ${CardValue[r.result.highCard[1]]} (player id: ${r.player.id})`));
 
 	// Group Similar
 	let index = 0;
@@ -49,10 +45,12 @@ export function determineWinner(table: ITable): number[][] {
 
 			// if hand is the same, group!
 			if (existingHand === newHand && existingKicker === newKicker) { groupedBySimilarHands[index].push(result); }
-			// else iterate and push
-			index++;
-			groupedBySimilarHands[index] = [];
-			groupedBySimilarHands[index].push(result);
+			else {
+				// else iterate and push
+				index++;
+				groupedBySimilarHands[index] = [];
+				groupedBySimilarHands[index].push(result);
+			}
 		}
 	}
 
