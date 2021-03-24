@@ -32,8 +32,19 @@ export function determineWinner(table: ITable): number[][] {
 	 */
 
 	// Sort
+	results.sort(sortByBestHand);
 
 	// Group Similar
 }
 
 function toId(player: IPlayer) { return player.id; }
+
+function sortByBestHand(a: IPlayerWithResult, b: IPlayerWithResult): -1 | 0 | 1 {
+	if (a.result.hand > b.result.hand) { return -1; }
+	if (a.result.hand < b.result.hand) { return 1; }
+
+	if (a.result.highCard[1] > b.result.highCard[1]) { return -1; }
+	if (a.result.highCard[1] < b.result.highCard[1]) { return 1; }
+
+	return 0;
+}
