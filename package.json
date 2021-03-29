@@ -1,6 +1,6 @@
 {
   "name": "poker-machine",
-  "version": "1.0.0rc2",
+  "version": "1.0.0rc3",
   "description": "blackbox approach to poker simulation as state machine",
   "main": "dist/index.js",
   "scripts": {
